@@ -1,1 +1,1 @@
-# Marvel
+# Marvel comics catalog app
