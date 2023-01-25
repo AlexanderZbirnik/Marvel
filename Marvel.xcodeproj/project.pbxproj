@@ -11,6 +11,7 @@
 		6B80DF0729804C15003BD961 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B80DF0629804C15003BD961 /* ContentView.swift */; };
 		6B80DF0929804C16003BD961 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6B80DF0829804C16003BD961 /* Assets.xcassets */; };
 		6B80DF0C29804C16003BD961 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6B80DF0B29804C16003BD961 /* Preview Assets.xcassets */; };
+		6B8A720F2981A533004DF8B1 /* Marvel-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6B8A720E2981A533004DF8B1 /* Marvel-Info.plist */; };
 		6BCB387B2981A12300026870 /* Tagged in Frameworks */ = {isa = PBXBuildFile; productRef = 6BCB387A2981A12300026870 /* Tagged */; };
 		6BCB387E2981A1EB00026870 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 6BCB387D2981A1EB00026870 /* ComposableArchitecture */; };
 /* End PBXBuildFile section */
@@ -21,6 +22,7 @@
 		6B80DF0629804C15003BD961 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		6B80DF0829804C16003BD961 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6B80DF0B29804C16003BD961 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		6B8A720E2981A533004DF8B1 /* Marvel-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Marvel-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,9 +57,8 @@
 		6B80DF0329804C15003BD961 /* Marvel */ = {
 			isa = PBXGroup;
 			children = (
-				6B80DF0429804C15003BD961 /* MarvelApp.swift */,
+				6B8A72102981A5A2004DF8B1 /* Support Files */,
 				6B80DF0629804C15003BD961 /* ContentView.swift */,
-				6B80DF0829804C16003BD961 /* Assets.xcassets */,
 				6B80DF0A29804C16003BD961 /* Preview Content */,
 			);
 			path = Marvel;
@@ -69,6 +70,16 @@
 				6B80DF0B29804C16003BD961 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		6B8A72102981A5A2004DF8B1 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				6B80DF0429804C15003BD961 /* MarvelApp.swift */,
+				6B80DF0829804C16003BD961 /* Assets.xcassets */,
+				6B8A720E2981A533004DF8B1 /* Marvel-Info.plist */,
+			);
+			name = "Support Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -139,6 +150,7 @@
 			files = (
 				6B80DF0C29804C16003BD961 /* Preview Assets.xcassets in Resources */,
 				6B80DF0929804C16003BD961 /* Assets.xcassets in Resources */,
+				6B8A720F2981A533004DF8B1 /* Marvel-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
