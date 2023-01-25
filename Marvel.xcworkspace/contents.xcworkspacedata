@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:Feature">
+   </FileRef>
+   <FileRef
       location = "container:Marvel.xcodeproj">
    </FileRef>
 </Workspace>
