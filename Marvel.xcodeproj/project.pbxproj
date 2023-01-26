@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6B1388EB2982FA3D00960F52 /* Common in Frameworks */ = {isa = PBXBuildFile; productRef = 6B1388EA2982FA3D00960F52 /* Common */; };
+		6B1388ED2982FD9F00960F52 /* Series in Frameworks */ = {isa = PBXBuildFile; productRef = 6B1388EC2982FD9F00960F52 /* Series */; };
 		6B80DF0529804C15003BD961 /* MarvelApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B80DF0429804C15003BD961 /* MarvelApp.swift */; };
 		6B80DF0729804C15003BD961 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B80DF0629804C15003BD961 /* ContentView.swift */; };
 		6B80DF0929804C16003BD961 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6B80DF0829804C16003BD961 /* Assets.xcassets */; };
@@ -32,6 +33,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6BCB387E2981A1EB00026870 /* ComposableArchitecture in Frameworks */,
+				6B1388ED2982FD9F00960F52 /* Series in Frameworks */,
 				6BCB387B2981A12300026870 /* Tagged in Frameworks */,
 				6B1388EB2982FA3D00960F52 /* Common in Frameworks */,
 			);
@@ -112,6 +114,7 @@
 				6BCB387A2981A12300026870 /* Tagged */,
 				6BCB387D2981A1EB00026870 /* ComposableArchitecture */,
 				6B1388EA2982FA3D00960F52 /* Common */,
+				6B1388EC2982FD9F00960F52 /* Series */,
 			);
 			productName = Marvel;
 			productReference = 6B80DF0129804C15003BD961 /* Marvel.app */;
@@ -406,6 +409,10 @@
 		6B1388EA2982FA3D00960F52 /* Common */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Common;
+		};
+		6B1388EC2982FD9F00960F52 /* Series */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Series;
 		};
 		6BCB387A2981A12300026870 /* Tagged */ = {
 			isa = XCSwiftPackageProductDependency;

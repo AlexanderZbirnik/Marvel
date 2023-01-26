@@ -8,6 +8,7 @@ let package = Package(
     platforms: [.iOS(.v16)],
     products: [
         .library(name: "Common", targets: ["Common"]),
+        .library(name: "Series", targets: ["Series"]),
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "0.49.0"),
@@ -17,5 +18,12 @@ let package = Package(
         .target(
             name: "Common",
             dependencies: []),
+        .target(
+            name: "Series",
+            dependencies: [
+                "Common",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                .product(name: "Tagged", package: "swift-tagged"),
+            ]),
     ]
 )
