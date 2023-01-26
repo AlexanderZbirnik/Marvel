@@ -9,6 +9,7 @@ let package = Package(
     products: [
         .library(name: "Common", targets: ["Common"]),
         .library(name: "Series", targets: ["Series"]),
+        .library(name: "Characters", targets: ["Characters"]),
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "0.49.0"),
@@ -20,6 +21,13 @@ let package = Package(
             dependencies: []),
         .target(
             name: "Series",
+            dependencies: [
+                "Common",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                .product(name: "Tagged", package: "swift-tagged"),
+            ]),
+        .target(
+            name: "Characters",
             dependencies: [
                 "Common",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
