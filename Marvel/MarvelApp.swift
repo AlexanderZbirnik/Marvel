@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(
@@ -24,7 +25,10 @@ struct MarvelApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            AppView(store: Store(
+                initialState: AppReducer.State(),
+                reducer: AppReducer())
+            )
         }
     }
 }
