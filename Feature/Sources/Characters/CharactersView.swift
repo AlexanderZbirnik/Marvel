@@ -2,7 +2,7 @@ import SwiftUI
 import ComposableArchitecture
 import Common
 
-public struct SeriesView: View {
+public struct CharactersView: View {
     var store: StoreOf<CharactersReducer>
     
     public init(store: StoreOf<CharactersReducer>) {
@@ -16,9 +16,9 @@ public struct SeriesView: View {
     }
 }
 
-public struct Series_Previews: PreviewProvider {
+public struct CharactersView_Previews: PreviewProvider {
     public static var previews: some View {
-        SeriesView(store: Store(
+        CharactersView(store: Store(
             initialState: CharactersReducer.State(),
             reducer: CharactersReducer())
         )
