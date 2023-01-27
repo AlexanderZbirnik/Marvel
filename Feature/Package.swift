@@ -10,6 +10,7 @@ let package = Package(
         .library(name: "Common", targets: ["Common"]),
         .library(name: "Series", targets: ["Series"]),
         .library(name: "Characters", targets: ["Characters"]),
+        .library(name: "MarveLService", targets: ["MarveLService"]),
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "0.49.0"),
@@ -26,6 +27,7 @@ let package = Package(
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Tagged", package: "swift-tagged"),
             ]),
+        .testTarget(name: "SeriesTests"),
         .target(
             name: "Characters",
             dependencies: [
@@ -33,5 +35,9 @@ let package = Package(
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Tagged", package: "swift-tagged"),
             ]),
+        .testTarget(name: "CharactersTests"),
+        .target(
+            name: "MarveLService",
+            dependencies: []),
     ]
 )
