@@ -10,6 +10,10 @@ struct AppReducer: ReducerProtocol {
         var tab: TabItem = .series
         var series = SeriesReducer.State()
         var characters = CharactersReducer.State()
+        
+        init() {
+            Log.action("AppReducer - init")
+        }
     }
     
     enum TabItem: Int {
@@ -34,13 +38,16 @@ struct AppReducer: ReducerProtocol {
         Reduce { state, action in
             switch action {
             case .onAppear:
-                Log.action("onAppear")
+                Log.action("AppReducer - onAppear")
+                return .task {
+                    .series(.loadSeries)
+                }
             case .series:
-                Log.action("series")
+                Log.action("AppReducer - series")
             case .characters:
-                Log.action("series")
+                Log.action("AppReducer - series")
             case .tabSelected:
-                Log.action("tabSelected")
+                Log.action("AppReducer - tabSelected")
                 Haptic.feedback(.selectionChanged)
             }
             return .none

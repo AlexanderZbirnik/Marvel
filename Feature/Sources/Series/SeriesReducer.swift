@@ -1,4 +1,5 @@
 import ComposableArchitecture
+import Common
 
 public struct SeriesReducer: ReducerProtocol {
     public struct State: Equatable, Identifiable {
@@ -9,7 +10,18 @@ public struct SeriesReducer: ReducerProtocol {
     
     public init() {}
     
-    public enum Action: Equatable {}
+    public enum Action: Equatable {
+        case onAppear
+        case loadSeries
+    }
     
-    public func reduce(into state: inout State, action: Action) -> EffectTask<Action> {}
+    public func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
+        switch action {
+        case .onAppear:
+            Log.action("SeriesReducer - onAppear")
+        case .loadSeries:
+            Log.action("SeriesReducer - loadSeries")
+        }
+        return .none
+    }
 }

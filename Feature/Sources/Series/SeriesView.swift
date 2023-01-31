@@ -12,6 +12,9 @@ public struct SeriesView: View {
     public var body: some View {
         WithViewStore(self.store) { viewStore in
             Text("Series")
+                .onAppear{
+                    viewStore.send(.onAppear)
+                }
         }
     }
 }
