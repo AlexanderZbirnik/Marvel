@@ -9,8 +9,7 @@ public struct CharactersReducer: ReducerProtocol {
     
     public init() {}
     
-    public enum Action: Equatable {
-    }
+    public enum Action: Equatable {}
     
-    public func reduce(into state: inout State, action: Action) -> Effect<Action, Never> {}
+    public func reduce(into state: inout State, action: Action) -> EffectTask<Action> {}
 }
