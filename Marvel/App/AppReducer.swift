@@ -3,6 +3,8 @@ import Common
 import SwiftUI
 import Series
 import Characters
+import CryptoKit
+import MarvelService
 
 struct AppReducer: ReducerProtocol {
     struct State: Equatable, Identifiable {
@@ -13,6 +15,9 @@ struct AppReducer: ReducerProtocol {
         
         init() {
             Log.action("AppReducer - init")
+            let apiParameters = marvelApiParameters()
+            self.series.apiParameters = apiParameters
+            self.characters.apiParameters = apiParameters
         }
     }
     
@@ -27,7 +32,7 @@ struct AppReducer: ReducerProtocol {
         case characters(CharactersReducer.Action)
         case tabSelected(TabItem)
     }
-        
+    
     var body: some ReducerProtocolOf<Self> {
         Scope(state: \.series, action: /Action.series) {
             SeriesReducer()
@@ -39,8 +44,8 @@ struct AppReducer: ReducerProtocol {
             switch action {
             case .onAppear:
                 Log.action("AppReducer - onAppear")
-                return .task {
-                    .series(.loadSeries)
+                Task { [parameters = state.series.apiParameters] in
+                    await MarvelService.series(parameters)
                 }
             case .series:
                 Log.action("AppReducer - series")
@@ -52,6 +57,34 @@ struct AppReducer: ReducerProtocol {
             }
             return .none
         }
+    }
+}
+
+extension AppReducer.State {
+    private func marvelApiParameters() -> [String: String] {
+        guard let filePath = Bundle.main.path(forResource: "Marvel-Info", ofType: "plist") else {
+            return [:]
+        }
+        let plist = NSDictionary(contentsOfFile: filePath)
+        guard let publicKey = plist?.object(forKey: "public_key") as? String else {
+            return [:]
+        }
+        guard let privateKey = plist?.object(forKey: "private_key") as? String else {
+            return [:]
+        }
+        let ts = String(Int(Date().timeIntervalSince1970 * 1000.0))
+        let totalString = ts + privateKey + publicKey
+        guard let data = totalString.data(using: .utf8) else {
+            return [:]
+        }
+        let hash = Insecure.MD5.hash(data: data).map {
+            String(format: "%02hhx", $0)
+        }.joined()
+        return [
+            MarvelService.ApiKey.ts: ts,
+            MarvelService.ApiKey.apiKey: publicKey,
+            MarvelService.ApiKey.hash: hash
+        ]
     }
 }
 

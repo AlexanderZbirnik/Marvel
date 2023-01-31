@@ -3,6 +3,7 @@ import ComposableArchitecture
 public struct CharactersReducer: ReducerProtocol {
     public struct State: Equatable, Identifiable {
         public var id = "series_id"
+        public var apiParameters: [String: String] = [:]
         
         public init() {}
     }
