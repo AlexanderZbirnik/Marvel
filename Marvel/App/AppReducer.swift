@@ -14,7 +14,6 @@ struct AppReducer: ReducerProtocol {
         var characters = CharactersReducer.State()
         
         init() {
-            Log.action("AppReducer - init")
             let apiParameters = marvelApiParameters()
             self.series.apiParameters = apiParameters
             self.characters.apiParameters = apiParameters
@@ -44,9 +43,6 @@ struct AppReducer: ReducerProtocol {
             switch action {
             case .onAppear:
                 Log.action("AppReducer - onAppear")
-                Task { [parameters = state.series.apiParameters] in
-                    await MarvelService.series(parameters)
-                }
             case .series:
                 Log.action("AppReducer - series")
             case .characters:

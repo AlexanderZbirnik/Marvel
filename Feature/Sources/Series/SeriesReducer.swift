@@ -1,4 +1,5 @@
 import ComposableArchitecture
+import MarvelService
 import Common
 
 public struct SeriesReducer: ReducerProtocol {
@@ -20,7 +21,13 @@ public struct SeriesReducer: ReducerProtocol {
         switch action {
         case .onAppear:
             Log.action("SeriesReducer - onAppear")
-            Log.action("SeriesReducer - apiParameters: \(state.apiParameters)")
+            Task { [parameters = state.apiParameters] in
+                var params = parameters
+                params["limit"] = "1"
+                if case let .success(series) = await MarvelService.series(parameters) {
+                    Log.success("fetch series", object: series)
+                }
+            }
         case .loadSeries:
             Log.action("SeriesReducer - loadSeries")
         }

@@ -24,6 +24,7 @@ let package = Package(
             name: "Series",
             dependencies: [
                 "Common",
+                "MarvelService",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Tagged", package: "swift-tagged"),
             ]),
@@ -32,6 +33,7 @@ let package = Package(
             name: "Characters",
             dependencies: [
                 "Common",
+                "MarvelService",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Tagged", package: "swift-tagged"),
             ]),
