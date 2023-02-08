@@ -36,6 +36,7 @@ public struct SeriesReducer: ReducerProtocol {
             Log.action("\(Self.self) - onAppear")
         case let .seriesLoaded(series):
             Log.action("\(Self.self) - seriesLoaded: \(series)")
+            state.series = series
         }
         return .none
     }

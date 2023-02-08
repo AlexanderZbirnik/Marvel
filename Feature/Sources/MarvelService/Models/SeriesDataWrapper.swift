@@ -23,7 +23,7 @@ extension SeriesDataWrapper {
 }
 
 extension SeriesDataWrapper.SeriesDataContainer {
-    public struct Series: Codable, Equatable {
+    public struct Series: Codable, Equatable, Identifiable {
         public var id: Int?
         public var title: String?
         public var description: String?

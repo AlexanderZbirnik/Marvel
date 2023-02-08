@@ -11,10 +11,15 @@ public struct SeriesView: View {
     
     public var body: some View {
         WithViewStore(self.store) { viewStore in
-            Text("Series")
-                .onAppear{
-                    viewStore.send(.onAppear)
-                }
+            VStack {
+                Text("series")
+                ForEach(viewStore.series, content: { series in
+                    Text(series.title ?? "")
+                })
+            }
+            .onAppear{
+                viewStore.send(.onAppear)
+            }
         }
     }
 }
