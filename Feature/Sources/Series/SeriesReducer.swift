@@ -6,6 +6,8 @@ public struct SeriesReducer: ReducerProtocol {
     public struct State: Equatable, Identifiable {
         public var id = "series_id"
         public var apiParameters: [String: String] = [:]
+        var firstOnAppear = true
+        var series: [Series] = []
         
         public init() {}
     }
@@ -15,22 +17,25 @@ public struct SeriesReducer: ReducerProtocol {
     public enum Action: Equatable {
         case onAppear
         case loadSeries
+        case seriesLoaded([Series])
     }
+    
+    @Dependency(\.seriesClient) var seriesClient
     
     public func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
         switch action {
         case .onAppear:
-            Log.action("SeriesReducer - onAppear")
-            Task { [parameters = state.apiParameters] in
-                var params = parameters
-                params["limit"] = "1"
-                guard let result = await MockMarvelService.series() else {
-                    return
+            if state.firstOnAppear {
+                state.firstOnAppear = false
+                return .task { [parameters = state.apiParameters] in
+                    .seriesLoaded(try await seriesClient.series(parameters))
                 }
-                Log.action("SeriesReducer - result: \(result)")
             }
+            return .none
         case .loadSeries:
-            Log.action("SeriesReducer - loadSeries")
+            Log.action("\(Self.self) - onAppear")
+        case let .seriesLoaded(series):
+            Log.action("\(Self.self) - seriesLoaded: \(series)")
         }
         return .none
     }
