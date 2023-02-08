@@ -23,7 +23,7 @@ extension SeriesDataWrapper {
 extension SeriesDataWrapper.SeriesDataContainer {
     public struct Series: Codable {
         public var id: Int?
-        public var titl: String?
+        public var title: String?
         public var description: String?
         public var resourceURI: String?
         public var urls: [MUrl] = []

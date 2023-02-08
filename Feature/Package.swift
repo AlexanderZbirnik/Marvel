@@ -40,7 +40,12 @@ let package = Package(
         .testTarget(name: "CharactersTests"),
         .target(
             name: "MarvelService",
-            dependencies: []),
+            dependencies: [
+                "Common",
+            ],
+            resources: [
+                .process("Mocks/SeriesDataWrapper.json")
+            ]),
         .testTarget(name: "MarvelServiceTests"),
     ]
 )

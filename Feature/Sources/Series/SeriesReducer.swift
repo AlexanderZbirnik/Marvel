@@ -24,9 +24,10 @@ public struct SeriesReducer: ReducerProtocol {
             Task { [parameters = state.apiParameters] in
                 var params = parameters
                 params["limit"] = "1"
-                if case let .success(series) = await MarvelService.series(parameters) {
-                    Log.success("fetch series", object: series)
+                guard let result = await MockMarvelService.series() else {
+                    return
                 }
+                Log.action("SeriesReducer - result: \(result)")
             }
         case .loadSeries:
             Log.action("SeriesReducer - loadSeries")
