@@ -41,6 +41,15 @@ extension SeriesDataWrapper.SeriesDataContainer {
         public var creators: CreatorList?
         public var next: SeriesSummary?
         public var previous: SeriesSummary?
+        
+        public var imageUrl: URL? {
+            guard var path = thumbnail?.path else {
+                return nil
+            }
+            path += ("/standard_medium." + (thumbnail?.extension ?? "jpg"))
+            print(path)
+            return URL(string: path)
+        }
     }
 }
 
