@@ -12,32 +12,18 @@ public struct SeriesListView: View {
     public var body: some View {
         WithViewStore(self.store) { viewStore in
             VStack {
-                Text("series")
-                List {
-                    ForEach(viewStore.series, content: { series in
-                        HStack {
-                            AsyncImage(url: series.imageUrl!) { image in
-                                        image
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fill)
-                                    } placeholder: {
-                                        Image(systemName: "photo.fill")
-                                    }.frame(width: 56.0, height: 56.0)
-                            VStack {
-                                HStack {
-                                    Text(series.title ?? "")
-                                    Spacer()
-                                }
-                                HStack {
-                                    Text("\(series.startYear ?? 0)")
-                                    Text("-")
-                                    Text("\(series.endYear ?? 0)")
-                                    Spacer()
-                                }
-                            }
-                            Spacer()
+                ScrollView {
+                    VStack(spacing: 4.0) {
+                        ForEachStore(
+                            self.store.scope(
+                                state: \.seriesItems,
+                                action: {
+                                    .seriesItem(id: $0, action: $1)
+                                }))
+                        { store in
+                            SeriesItemView(store: store)
                         }
-                    })
+                    }
                 }
             }
             .onAppear{

@@ -1,4 +1,5 @@
 import Foundation
+import Tagged
 
 public typealias Series = SeriesDataWrapper.SeriesDataContainer.Series
 
@@ -24,7 +25,7 @@ extension SeriesDataWrapper {
 
 extension SeriesDataWrapper.SeriesDataContainer {
     public struct Series: Codable, Equatable, Identifiable {
-        public var id: Int?
+        public var id: Id
         public var title: String?
         public var description: String?
         public var resourceURI: String?
@@ -42,14 +43,7 @@ extension SeriesDataWrapper.SeriesDataContainer {
         public var next: SeriesSummary?
         public var previous: SeriesSummary?
         
-        public var imageUrl: URL? {
-            guard var path = thumbnail?.path else {
-                return nil
-            }
-            path += ("/standard_medium." + (thumbnail?.extension ?? "jpg"))
-            print(path)
-            return URL(string: path)
-        }
+        public typealias Id = Tagged<Series, Int>
     }
 }
 
@@ -129,4 +123,18 @@ public struct CreatorList: Codable, Equatable {
 public struct SeriesSummary: Codable, Equatable {
     public var resourceURI: String?
     public var name: String?
+}
+
+// MARK: - Mocks
+
+extension SeriesDataWrapper.SeriesDataContainer.Series {
+    public static let mock: Self = {
+        var series = Self(id: .init(0))
+        series.title = "Any series title"
+        series.startYear = 2020
+        series.endYear = 2023
+        series.thumbnail?.path = "http://i.annihil.us/u/prod/marvel/i/mg/4/b0/5d939e25a9787"
+        series.thumbnail?.extension = "jpg"
+        return series
+    }()
 }
