@@ -10,7 +10,7 @@ struct AppReducer: ReducerProtocol {
     struct State: Equatable, Identifiable {
         let id = "app_id"
         var tab: TabItem = .series
-        var series = SeriesReducer.State()
+        var series = SeriesListReducer.State()
         var characters = CharactersReducer.State()
         
         init() {
@@ -27,14 +27,14 @@ struct AppReducer: ReducerProtocol {
     
     enum Action: Equatable {
         case onAppear
-        case series(SeriesReducer.Action)
+        case series(SeriesListReducer.Action)
         case characters(CharactersReducer.Action)
         case tabSelected(TabItem)
     }
     
     var body: some ReducerProtocolOf<Self> {
         Scope(state: \.series, action: /Action.series) {
-            SeriesReducer()
+            SeriesListReducer()
         }
         Scope(state: \.characters, action: /Action.characters) {
             CharactersReducer()

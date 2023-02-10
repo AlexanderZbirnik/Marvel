@@ -40,7 +40,7 @@ struct AppView: View {
                     }
                 )
             ) {
-                SeriesView(
+                SeriesListView(
                     store: self.store.scope(
                         state: \.series,
                         action: AppReducer.Action.series
