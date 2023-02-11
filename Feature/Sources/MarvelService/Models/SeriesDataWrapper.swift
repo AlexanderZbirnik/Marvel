@@ -3,6 +3,16 @@ import Tagged
 
 public typealias Series = SeriesDataWrapper.SeriesDataContainer.Series
 
+public struct SeriesList: Equatable {
+    public var attributionHTML = ""
+    public var series: [Series] = []
+    
+    public init() {
+        self.attributionHTML =
+        "<a href=\"http://marvel.com\">Data provided by Marvel. © 2023 MARVEL</a>"
+    }
+}
+
 public struct SeriesDataWrapper: Codable {
     public var code: Int?
     public var status: String?

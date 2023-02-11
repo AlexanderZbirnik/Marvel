@@ -11,21 +11,34 @@ public struct SeriesListView: View {
     
     public var body: some View {
         WithViewStore(self.store) { viewStore in
-            VStack {
-                ScrollView {
-                    VStack(spacing: 4.0) {
-                        ForEachStore(
-                            self.store.scope(
-                                state: \.seriesItems,
-                                action: {
-                                    .seriesItem(id: $0, action: $1)
-                                }))
-                        { store in
-                            SeriesItemView(store: store)
+            List {
+                Section {
+                    ForEachStore(
+                        self.store.scope(
+                            state: \.seriesItems,
+                            action: {
+                                .seriesItem(id: $0, action: $1)
+                            }))
+                    { store in
+                        SeriesItemView(store: store)
+                            .frame(height: 88.0)
+                    }
+                } footer: {
+                    ZStack {
+                        Palette.darkGray
+                        HStack {
+                            Spacer()
+                            Text(viewStore.copyright)
+                            Spacer()
                         }
                     }
                 }
+                .listRowSeparator(.hidden)
+                .listRowInsets(EdgeInsets(top: .zero, leading: .zero, bottom: .zero, trailing: .zero))
             }
+            .background(Palette.darkGray)
+            .listStyle(.plain)
+            .scrollIndicators(.hidden)
             .onAppear{
                 viewStore.send(.onAppear)
             }

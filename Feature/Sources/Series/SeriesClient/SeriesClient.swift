@@ -4,16 +4,20 @@ import Dependencies
 import MarvelService
 
 public struct SeriesClient: Sendable {
-    public var series: @Sendable([String: String]) async throws -> [Series]
+    public var series: @Sendable([String: String]) async throws -> SeriesList
 }
 
 extension SeriesClient: TestDependencyKey {
     public static let previewValue = Self(
         series: { _ in
             guard let result = await MockMarvelService.series() else {
-                return []
+                return SeriesList()
             }
-            return result.data?.results ?? []
+            var seriesList = SeriesList()
+            seriesList.attributionHTML =
+            result.attributionHTML ?? seriesList.attributionHTML
+            seriesList.series = result.data?.results ?? []
+            return seriesList
         }
     )
     

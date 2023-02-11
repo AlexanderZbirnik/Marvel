@@ -1,3 +1,4 @@
+import Foundation
 import ComposableArchitecture
 import MarvelService
 import Common
@@ -8,6 +9,7 @@ public struct SeriesListReducer: ReducerProtocol {
         public var apiParameters: [String: String] = [:]
         var firstOnAppear = true
         var seriesItems: IdentifiedArrayOf<SeriesItemReducer.State> = []
+        var copyright = AttributedString()
         
         public init() {}
     }
@@ -17,7 +19,7 @@ public struct SeriesListReducer: ReducerProtocol {
     public enum Action: Equatable {
         case onAppear
         case loadSeries
-        case seriesLoaded([Series])
+        case seriesLoaded(SeriesList)
         case seriesItem(id: Series.Id, action: SeriesItemReducer.Action)
     }
     
@@ -37,14 +39,23 @@ public struct SeriesListReducer: ReducerProtocol {
             case .loadSeries:
                 Log.action("\(Self.self) - onAppear")
             case let .seriesLoaded(seriesList):
-                Log.action("\(Self.self) - seriesLoaded: \(seriesList)")
+                if let data = seriesList.attributionHTML.data(using: .unicode),
+                   let attributedString =
+                    try? NSAttributedString(data: data,
+                                            options: [.documentType: NSAttributedString.DocumentType.html],
+                                            documentAttributes: nil) {
+                    state.copyright = AttributedString(attributedString)
+                    state.copyright.foregroundColor = Palette.red
+                    state.copyright.font = .callout
+                }
                 var seriesItems: IdentifiedArrayOf<SeriesItemReducer.State> = []
-                for series in seriesList {
+                for series in seriesList.series {
                     seriesItems.append(SeriesItemReducer.State(series))
                 }
                 state.seriesItems = seriesItems
             case let .seriesItem(id, _):
                 Log.action("\(Self.self) - seriesItem id: \(id)")
+                Haptic.feedback(.soft)
             }
             return .none
         }

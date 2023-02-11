@@ -22,9 +22,7 @@ public struct SeriesItemReducer: ReducerProtocol {
             }
             self.years = years
             if var path = series.thumbnail?.path {
-                Log.action("before path: \(path)")
                 path = path.replacingOccurrences(of: "http:", with: "https:")
-                Log.action("after path: \(path)")
                 path += "/standard_medium"
                 if let ext = series.thumbnail?.extension {
                     path += ("." + ext)

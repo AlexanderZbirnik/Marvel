@@ -11,22 +11,38 @@ public struct SeriesItemView: View {
     
     public var body: some View {
         WithViewStore(self.store) { viewStore in
-            HStack {
-                AsyncImage(url: viewStore.imageUrl) { image in
-                            image
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                        } placeholder: {
-                            Color.gray
-                        }
-                        .frame(width: 56.0, height: 56.0)
-                Text(viewStore.title)
-                    .font(.title3)
-                    .foregroundColor(Palette.black)
-                    .fontWeight(.regular)
-                Spacer()
+            GeometryReader { proxy in
+                ZStack {
+                    Palette.darkGray
+                    RoundedRectangle(cornerSize: CGSize(width: 8.0, height: 8.0))
+                        .fill(Palette.lightGray)
+                        .frame(width: proxy.size.width - 24.0, height: 74.0)
+                        .shadow(radius: 4.0)
+                    
+                    HStack(spacing: 16.0) {
+                        AsyncImage(url: viewStore.imageUrl) { image in
+                                    image
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                } placeholder: {
+                                    Color.gray
+                                }
+                                .frame(width: 56.0, height: 56.0)
+                                .cornerRadius(8.0)
+                                .padding(.leading, 22.0)
+                        Text(viewStore.title)
+                            .font(.body)
+                            .foregroundColor(Palette.white)
+                            .fontWeight(.regular)
+                            .lineLimit(1)
+                            .padding(.trailing)
+                        Spacer()
+                    }
+                }
+                .onAppear {
+                    viewStore.send(.onAppear)
+                }
             }
-            .padding([.leading, .trailing], 8.0)
         }
     }
 }
@@ -39,7 +55,7 @@ public struct SeriesItemView_Previews: PreviewProvider {
                 initialState: SeriesItemReducer.State(.mock),
                 reducer: SeriesItemReducer())
             )
-            .frame(height: 64.0)
+            .frame(height: 88.0)
             .background(Color.white)
         }
     }

@@ -6,9 +6,13 @@ extension SeriesClient: DependencyKey {
     public static let liveValue = Self(
         series: { parameters in
             if case let .success(result) = await MarvelService.series(parameters) {
-                return result.data?.results ?? []
+                var seriesList = SeriesList()
+                seriesList.attributionHTML =
+                result.attributionHTML ?? seriesList.attributionHTML
+                seriesList.series = result.data?.results ?? []
+                return seriesList
             }
-            return []
+            return SeriesList()
         }
     )
 }
