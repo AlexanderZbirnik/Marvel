@@ -29,38 +29,66 @@ public struct SeriesListReducer: ReducerProtocol {
         Reduce { state, action in
             switch action {
             case .onAppear:
-                if state.firstOnAppear {
-                    state.firstOnAppear = false
-                    return .task { [parameters = state.apiParameters] in
-                            .seriesLoaded(try await seriesClient.series(parameters))
-                    }
-                }
-                return .none
+                return onAppearAction(&state)
             case .loadSeries:
-                Log.action("\(Self.self) - onAppear")
+                return loadSeriesAction(&state)
             case let .seriesLoaded(seriesList):
-                if let data = seriesList.attributionHTML.data(using: .unicode),
-                   let attributedString =
-                    try? NSAttributedString(data: data,
-                                            options: [.documentType: NSAttributedString.DocumentType.html],
-                                            documentAttributes: nil) {
-                    state.copyright = AttributedString(attributedString)
-                    state.copyright.foregroundColor = Palette.red
-                    state.copyright.font = .callout
-                }
-                var seriesItems: IdentifiedArrayOf<SeriesItemReducer.State> = []
-                for series in seriesList.series {
-                    seriesItems.append(SeriesItemReducer.State(series))
-                }
-                state.seriesItems = seriesItems
-            case let .seriesItem(id, _):
-                Log.action("\(Self.self) - seriesItem id: \(id)")
-                Haptic.feedback(.soft)
+                seriesLoadedAction(&state, seriesList: seriesList)
+            case let .seriesItem(id, seriesItemAction):
+                return seriesItemActions(&state, id: id, action: seriesItemAction)
             }
             return .none
         }
         .forEach(\.seriesItems, action: /Action.seriesItem(id:action:)) {
             SeriesItemReducer()
         }
+    }
+}
+
+// MARK: - Actions
+
+extension SeriesListReducer {
+    func onAppearAction(_ state: inout State) -> EffectTask<Action> {
+        if state.firstOnAppear {
+            state.firstOnAppear = false
+            return .task { .loadSeries }
+        }
+        return .none
+    }
+    
+    func loadSeriesAction(_ state: inout State) -> EffectTask<Action> {
+        state.apiParameters["limit"] = "20"
+        state.apiParameters["offset"] = "\(state.seriesItems.count)"
+        let parameters = state.apiParameters
+        return .task {
+            .seriesLoaded(try await seriesClient.series(parameters))
+        }
+    }
+    
+    func seriesLoadedAction(_ state: inout State, seriesList: SeriesList) {
+        if let data = seriesList.attributionHTML.data(using: .unicode),
+           let attributedString =
+            try? NSAttributedString(data: data,
+                                    options: [.documentType: NSAttributedString.DocumentType.html],
+                                    documentAttributes: nil) {
+            state.copyright = AttributedString(attributedString)
+            state.copyright.foregroundColor = Palette.red
+            state.copyright.font = .callout
+        }
+        var seriesItems: IdentifiedArrayOf<SeriesItemReducer.State> = []
+        for series in seriesList.series {
+            seriesItems.append(SeriesItemReducer.State(series))
+        }
+        state.seriesItems += seriesItems
+    }
+    
+    func seriesItemActions(_ state: inout State, id: Series.Id, action: SeriesItemReducer.Action) -> EffectTask<Action> {
+        if action == .onAppear {
+            Haptic.feedback(.soft)
+            if id == (state.seriesItems.last?.id ?? .init(0)) {
+                return .task { .loadSeries }
+            }
+        }
+        return .none
     }
 }

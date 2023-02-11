@@ -26,11 +26,15 @@ public struct SeriesListView: View {
                 } footer: {
                     ZStack {
                         Palette.darkGray
-                        HStack {
-                            Spacer()
-                            Text(viewStore.copyright)
-                            Spacer()
-                        }
+                        ListFooterView(link: viewStore.copyright,
+                                       color: Palette.red)
+                        .frame(height: 52.0)
+//                        HStack {
+//                            Spacer()
+//                            Text(viewStore.copyright)
+//                                .fontWeight(.medium)
+//                            Spacer()
+//                        }
                     }
                 }
                 .listRowSeparator(.hidden)
