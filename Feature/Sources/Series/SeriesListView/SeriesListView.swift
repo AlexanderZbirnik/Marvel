@@ -7,23 +7,26 @@ public struct SeriesListView: View {
     
     public init(store: StoreOf<SeriesListReducer>) {
         self.store = store
+        
     }
     
     public var body: some View {
         WithViewStore(self.store) { viewStore in
-            ZStack {
-                Palette.darkGray
-                    .ignoresSafeArea()
-                if viewStore.seriesItems.isEmpty {
-                    DotsActivityView(color: Palette.red)
-                        
-                } else {
-                    listView
+            NavigationView {
+                ZStack {
+                    Palette.darkGray
+                        .ignoresSafeArea()
+                    if viewStore.seriesItems.isEmpty {
+                        DotsActivityView(color: Palette.red)
+                    } else {
+                        listView
+                    }
                 }
-            }
-            .onAppear {
-                viewStore.send(.onAppear)
-            }
+                .navigationTitle("Series")
+                .onAppear {
+                    viewStore.send(.onAppear)
+                }
+            }            
         }
     }
     
@@ -45,14 +48,16 @@ public struct SeriesListView: View {
                     ZStack {
                         Palette.darkGray
                         if viewStore.showFooter {
-                            ListFooterView(link: viewStore.copyright,
-                                           color: Palette.red)
+                            ListFooterView(
+                                link: viewStore.copyright,
+                                color: Palette.red
+                            )
                         }
                     }
                     .frame(height: 48.0)
                 }
                 .listRowSeparator(.hidden)
-                .listRowInsets(EdgeInsets(top: .zero, leading: .zero, bottom: .zero, trailing: .zero))
+                .listRowInsets(EdgeInsets(.zero))
             }
             .background(Palette.darkGray)
             .listStyle(.plain)

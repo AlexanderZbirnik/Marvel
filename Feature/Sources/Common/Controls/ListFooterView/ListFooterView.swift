@@ -26,8 +26,10 @@ public struct ListFooterView_Previews: PreviewProvider {
     public static var previews: some View {
         ZStack {
             Color.gray
-            ListFooterView(link: AttributedString("AttributedString"),
-                           color: .red)
+            ListFooterView(
+                link: AttributedString("AttributedString"),
+                color: .red
+            )
         }
         .frame(height: 48.0)
     }

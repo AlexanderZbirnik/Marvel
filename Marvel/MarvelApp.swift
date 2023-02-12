@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ComposableArchitecture
+import Common
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(
@@ -14,6 +15,9 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         didFinishLaunchingWithOptions
         options: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
+        let attributes = [NSAttributedString.Key.foregroundColor: UIColor(Palette.red)]
+        UINavigationBar.appearance().titleTextAttributes = attributes
+        UINavigationBar.appearance().largeTitleTextAttributes = attributes
         return true
     }
 }
@@ -29,6 +33,7 @@ struct MarvelApp: App {
                 initialState: AppReducer.State(),
                 reducer: AppReducer())
             )
+            .environment(\.colorScheme, .dark)
         }
     }
 }

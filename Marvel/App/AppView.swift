@@ -9,16 +9,13 @@ struct AppView: View {
     
     init(store: StoreOf<AppReducer>) {
         self.store = store
-//        UITabBar.appearance().barTintColor =
-//        UIColor(Palette.darkGray)
     }
     
     var body: some View {
         WithViewStore(self.store) { viewStore in
             ZStack {
-                Palette.red
-//                Palette.dark
-//                    .ignoresSafeArea()
+                Palette.darkGray
+                    .ignoresSafeArea()
                 tabsView
             }
             .onAppear {
