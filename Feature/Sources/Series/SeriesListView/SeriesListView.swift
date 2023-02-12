@@ -11,6 +11,24 @@ public struct SeriesListView: View {
     
     public var body: some View {
         WithViewStore(self.store) { viewStore in
+            ZStack {
+                Palette.darkGray
+                    .ignoresSafeArea()
+                if viewStore.seriesItems.isEmpty {
+                    DotsActivityView(color: Palette.red)
+                        
+                } else {
+                    listView
+                }
+            }
+            .onAppear {
+                viewStore.send(.onAppear)
+            }
+        }
+    }
+    
+    var listView: some View {
+        WithViewStore(self.store) { viewStore in
             List {
                 Section {
                     ForEachStore(
@@ -31,7 +49,7 @@ public struct SeriesListView: View {
                                            color: Palette.red)
                         }
                     }
-                    .frame(height: 52.0)
+                    .frame(height: 48.0)
                 }
                 .listRowSeparator(.hidden)
                 .listRowInsets(EdgeInsets(top: .zero, leading: .zero, bottom: .zero, trailing: .zero))
@@ -39,9 +57,6 @@ public struct SeriesListView: View {
             .background(Palette.darkGray)
             .listStyle(.plain)
             .scrollIndicators(.hidden)
-            .onAppear{
-                viewStore.send(.onAppear)
-            }
         }
     }
 }
