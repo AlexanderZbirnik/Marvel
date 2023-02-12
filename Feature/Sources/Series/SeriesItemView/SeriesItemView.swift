@@ -25,7 +25,10 @@ public struct SeriesItemView: View {
                                         .resizable()
                                         .aspectRatio(contentMode: .fill)
                                 } placeholder: {
-                                    Color.gray
+                                    Image(systemName: "photo")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                        .foregroundColor(Palette.gray)
                                 }
                                 .frame(width: 56.0, height: 56.0)
                                 .cornerRadius(8.0)

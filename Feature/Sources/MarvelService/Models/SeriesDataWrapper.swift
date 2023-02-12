@@ -145,6 +145,7 @@ extension SeriesDataWrapper.SeriesDataContainer.Series {
         series.endYear = 2023
         series.thumbnail?.path = "http://i.annihil.us/u/prod/marvel/i/mg/4/b0/5d939e25a9787"
         series.thumbnail?.extension = "jpg"
+        series.description = "Award-winning writer Neil Gaiman teams with artist Andy Kubert to re-imagine the Marvel Universe"
         return series
     }()
 }
