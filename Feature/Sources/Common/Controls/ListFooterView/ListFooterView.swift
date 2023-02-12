@@ -3,9 +3,9 @@ import SwiftUI
 public struct ListFooterView: View {
     var link: AttributedString
     var color: Color
-    @State var firstScale = CGFloat.zero
-    @State var secondScalse = CGFloat.zero
-    @State var thriedScale = CGFloat.zero
+    @State var firstScale: CGFloat = 0.01
+    @State var secondScalse: CGFloat = 0.01
+    @State var thriedScale: CGFloat = 0.01
     
     public init(link: AttributedString, color: Color) {
         self.link = link
@@ -51,7 +51,11 @@ public struct ListFooterView: View {
 
 public struct ListFooterView_Previews: PreviewProvider {
     public static var previews: some View {
-        ListFooterView(link: AttributedString("AttributedString"),
-                       color: .red)
+        ZStack {
+            Color.gray
+            ListFooterView(link: AttributedString("AttributedString"),
+                           color: .red)
+        }
+        .frame(height: 52.0)
     }
 }

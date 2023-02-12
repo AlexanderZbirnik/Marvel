@@ -10,6 +10,7 @@ public struct SeriesListReducer: ReducerProtocol {
         var firstOnAppear = true
         var seriesItems: IdentifiedArrayOf<SeriesItemReducer.State> = []
         var copyright = AttributedString()
+        var showFooter = false
         
         public init() {}
     }
@@ -80,6 +81,7 @@ extension SeriesListReducer {
             seriesItems.append(SeriesItemReducer.State(series))
         }
         state.seriesItems += seriesItems
+        state.showFooter = !state.seriesItems.isEmpty
     }
     
     func seriesItemActions(_ state: inout State, id: Series.Id, action: SeriesItemReducer.Action) -> EffectTask<Action> {

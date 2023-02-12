@@ -44,9 +44,9 @@ struct AppReducer: ReducerProtocol {
             case .onAppear:
                 Log.action("AppReducer - onAppear")
             case .series:
-                Log.action("AppReducer - series")
+                return .none
             case .characters:
-                Log.action("AppReducer - series")
+                Log.action("AppReducer - characters")
             case .tabSelected:
                 Log.action("AppReducer - tabSelected")
                 Haptic.feedback(.selectionChanged)

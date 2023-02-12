@@ -26,16 +26,12 @@ public struct SeriesListView: View {
                 } footer: {
                     ZStack {
                         Palette.darkGray
-                        ListFooterView(link: viewStore.copyright,
-                                       color: Palette.red)
-                        .frame(height: 52.0)
-//                        HStack {
-//                            Spacer()
-//                            Text(viewStore.copyright)
-//                                .fontWeight(.medium)
-//                            Spacer()
-//                        }
+                        if viewStore.showFooter {
+                            ListFooterView(link: viewStore.copyright,
+                                           color: Palette.red)
+                        }
                     }
+                    .frame(height: 52.0)
                 }
                 .listRowSeparator(.hidden)
                 .listRowInsets(EdgeInsets(top: .zero, leading: .zero, bottom: .zero, trailing: .zero))
