@@ -37,10 +37,22 @@ public struct SeriesItemView: View {
                             .font(.body)
                             .foregroundColor(Palette.white)
                             .fontWeight(.regular)
-                            .lineLimit(1)
+                            .lineLimit(2)
                             .padding(.trailing)
                         Spacer()
                     }
+                    NavigationLink {
+                        SeriesView(
+                            store: self.store.scope(
+                                state: \.series,
+                                action: SeriesItemReducer.Action.series
+                            )
+                        )
+                    } label: {
+                        EmptyView()
+                    }
+                    .opacity(.zero)
+
                 }
                 .onAppear {
                     viewStore.send(.onAppear)

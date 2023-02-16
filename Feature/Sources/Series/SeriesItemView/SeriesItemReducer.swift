@@ -8,13 +8,13 @@ public struct SeriesItemReducer: ReducerProtocol {
         public var id: Series.Id
         var title = ""
         var imageUrl: URL
-        var series: Series
+        var series: SeriesReducer.State
         
         public init(_ series: Series) {
             self.id = series.id
             self.title = series.title ?? ""
             self.imageUrl = Self.parseThumbnail(series.thumbnail)
-            self.series = series
+            self.series = SeriesReducer.State(series)
         }
         
         static func parseThumbnail(_ image: MImage?) -> URL {
@@ -41,12 +41,18 @@ public struct SeriesItemReducer: ReducerProtocol {
     
     public enum Action: Equatable {
         case onAppear
+        case series(SeriesReducer.Action)
     }
     
-    public func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
-        switch action {
-        case .onAppear:
-            return .none
+    public var body: some ReducerProtocolOf<Self> {
+        Scope(state: \.series, action: /Action.series) {
+            SeriesReducer()
+        }
+        Reduce { state, action in
+            switch action {
+            case .onAppear, .series:
+                return .none
+            }
         }
     }
 }
