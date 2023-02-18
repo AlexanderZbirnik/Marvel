@@ -15,7 +15,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         didFinishLaunchingWithOptions
         options: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
-        let attributes = [NSAttributedString.Key.foregroundColor: UIColor(Palette.red)]
+        let attributes = [NSAttributedString.Key.foregroundColor: UIColor(Palette.white)]
         UINavigationBar.appearance().titleTextAttributes = attributes
         UINavigationBar.appearance().largeTitleTextAttributes = attributes
         return true

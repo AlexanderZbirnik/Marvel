@@ -15,7 +15,7 @@ public struct SeriesView: View {
                 ZStack {
                     Palette.darkGray
                         .ignoresSafeArea()
-                    VStack {
+                    ScrollView(.vertical) {
                         AsyncImage(url: viewStore.imageUrl) { image in
                             image
                                 .resizable()
@@ -27,8 +27,9 @@ public struct SeriesView: View {
                             CGSize(width: 300.0,height: 450.0),
                             contentMode: .fit)
                         .cornerRadius(8.0)
-                        .shadow(radius: 8.0)
+                        .shadow(color: Palette.red, radius: 8.0)
                         .padding([.leading, .trailing], 64.0)
+                        .padding([.top, .bottom])
                         Text(viewStore.detail)
                             .font(.body)
                             .foregroundColor(Palette.white)
@@ -49,10 +50,12 @@ public struct SeriesView_Previews: PreviewProvider {
     public static var previews: some View {
         ZStack {
             Color.gray
-            SeriesView(store: Store(
-                initialState: SeriesReducer.State(.mock),
-                reducer: SeriesReducer())
-            )
+            NavigationStack {
+                SeriesView(store: Store(
+                    initialState: SeriesReducer.State(.mock),
+                    reducer: SeriesReducer())
+                )
+            }
         }
     }
 }
