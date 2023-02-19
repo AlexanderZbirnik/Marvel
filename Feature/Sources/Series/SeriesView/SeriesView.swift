@@ -29,11 +29,34 @@ public struct SeriesView: View {
                         .cornerRadius(8.0)
                         .shadow(color: Palette.red, radius: 8.0)
                         .padding([.leading, .trailing], 64.0)
-                        .padding([.top, .bottom])
-                        Text(viewStore.detail)
-                            .font(.body)
-                            .foregroundColor(Palette.white)
-                            .padding(16.0)
+                        .padding([.top, .bottom], 16.0)
+                        if !viewStore.detail.isEmpty {
+                            Text(viewStore.detail)
+                                .font(.body)
+                                .foregroundColor(Palette.white)
+                                .padding([.leading, .trailing], 16.0)
+                                .padding([.top], 24.0)
+                        }
+                        if let characters = viewStore.characters {
+                            HStack {
+                                Text(characters.name)
+                                    .font(.title2)
+                                    .fontWeight(.medium)
+                                    .foregroundColor(Palette.gray)
+                                    .padding([.leading, .trailing], 16.0)
+                                    .padding(.top, 8.0)
+                                Spacer()
+                            }
+                            HStack {
+                                Text(characters.list)
+                                    .font(.headline)
+                                    .fontWeight(.regular)
+                                    .foregroundColor(Palette.white)
+                                    .padding([.leading, .trailing], 16.0)
+                                    .padding(.top, 2.0)
+                                Spacer()
+                            }
+                        }
                         Spacer()
                     }
                 }

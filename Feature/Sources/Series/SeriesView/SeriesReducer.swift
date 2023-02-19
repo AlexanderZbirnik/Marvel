@@ -9,12 +9,16 @@ public struct SeriesReducer: ReducerProtocol {
         var title = ""
         var detail = ""
         var imageUrl: URL
+        var characters: SeriesCharactersList?
         
         public init(_ series: Series) {
             self.id = series.id
             self.title = series.title ?? ""
             self.detail = series.description ?? ""
             self.imageUrl = Self.parseThumbnail(series.thumbnail)
+            if let characters = series.characters, !(characters.items ?? []).isEmpty {
+                self.characters = SeriesCharactersList(characters)
+            }
         }
         
         static func parseThumbnail(_ image: MImage?) -> URL {
