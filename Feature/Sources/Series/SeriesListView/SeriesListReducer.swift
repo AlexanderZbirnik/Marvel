@@ -62,7 +62,7 @@ extension SeriesListReducer {
         state.apiParameters["offset"] = "\(state.seriesItems.count)"
         let parameters = state.apiParameters
         return .task {
-            .seriesLoaded(try await seriesClient.series(parameters))
+            .seriesLoaded(try await seriesClient.seriesList(parameters))
         }
     }
     

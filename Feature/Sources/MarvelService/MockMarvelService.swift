@@ -25,24 +25,3 @@ func decode<T: Decodable>(data: Data) async -> T? {
         }
     }
 }
-
-//func localDiscover() async -> [LearnBlock] {
-//    guard let dataUrl = Bundle.module.url(forResource: "discover", withExtension: "json") else {
-//        return []
-//    }
-//    guard let data = try? Data(contentsOf: dataUrl) else {
-//        return []
-//    }
-//    return await decodeDiscover(data: data)
-//}
-
-//func decodeDiscover(data: Data) async -> [LearnBlock] {
-//    return await withCheckedContinuation { continuation in
-//        do {
-//            let object: [LearnBlock] = try JSONDecoder().decode([LearnBlock].self, from: data)
-//            return continuation.resume(returning: object)
-//        } catch _ {
-//            return continuation.resume(returning: [])
-//        }
-//    }
-//}

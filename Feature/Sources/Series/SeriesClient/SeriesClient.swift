@@ -4,12 +4,12 @@ import Dependencies
 import MarvelService
 
 public struct SeriesClient: Sendable {
-    public var series: @Sendable([String: String]) async throws -> SeriesList
+    public var seriesList: @Sendable([String: String]) async throws -> SeriesList
 }
 
 extension SeriesClient: TestDependencyKey {
     public static let previewValue = Self(
-        series: { _ in
+        seriesList: { _ in
             guard let result = await MockMarvelService.series() else {
                 return SeriesList()
             }
@@ -22,7 +22,7 @@ extension SeriesClient: TestDependencyKey {
     )
     
     public static let testValue = Self(
-        series: XCTUnimplemented("\(Self.self).series")
+        seriesList: XCTUnimplemented("\(Self.self).series")
     )
 }
 

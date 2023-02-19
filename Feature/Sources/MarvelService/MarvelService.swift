@@ -7,7 +7,7 @@ public struct MarvelService {
         public static let apiKey = "apikey"
     }
     
-    public static func series(_ parameters: [String: String]) async -> Result<SeriesDataWrapper, MarvelApiError> {
+    public static func seriesList(_ parameters: [String: String]) async -> Result<SeriesDataWrapper, MarvelApiError> {
         var urlString = "https://gateway.marvel.com/v1/public/series?"
         for (key, value) in parameters {
             urlString += (key + "=" + value)
