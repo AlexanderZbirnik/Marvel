@@ -136,15 +136,50 @@ extension SeriesDataWrapper.SeriesDataContainer.Series {
         series.thumbnail?.path = "http://i.annihil.us/u/prod/marvel/i/mg/c/c0/5f60c70ccd7f9"
         series.thumbnail?.extension = "jpg"
         series.description = "BIG IRON! Tony Stark is looking to restart his engine. He decides he’s going back to basics, putting away his high-tech toys and high-profile image so he can get his hands dirty again. It’s time to dig into the guts of real machines, put on some old-fashioned metal and fly. But can he really lay that Stark-sized ego down? Life isn’t that simple, something that old friends and frustrating foes are quick to point out. If you strip down a billionaire to his bolts, does he run solid or just overheat? Tony’s going to find out once a threat to the entire universe rears its head from the past. As he suits up again, Tony remains sure of one thing: he’s still IRON MAN down to his flesh and blood core. "
-        series.characters = CharacterList()
-        series.characters?.available = 2
-        series.characters?.returned = 2
-        series.characters?.collectionURI = "http://gateway.marvel.com/v1/public/series/30148/characters"
-        series.characters?.items = [
+        series.characters = .mock
+        series.creators = .mock
+        
+        return series
+    }()
+}
+
+extension CharacterList {
+    public static let mock: Self = {
+        var characters = CharacterList()
+        characters.available = 2
+        characters.returned = 2
+        characters.collectionURI = "http://gateway.marvel.com/v1/public/series/30148/characters"
+        characters.items = [
             CharacterList.CharacterSummary(resourceURI: "http://gateway.marvel.com/v1/public/characters/1011286", name: "Cobalt Man"),
             CharacterList.CharacterSummary(resourceURI: "http://gateway.marvel.com/v1/public/characters/1009368", name: "Iron Man")
         ]
-        
-        return series
+        return characters
+    }()
+}
+
+extension CreatorList {
+    public static let mock: Self = {
+        var creators = CreatorList()
+        creators.available = 2
+        creators.returned = 2
+        creators.collectionURI = "http://gateway.marvel.com/v1/public/series/16593/creators"
+        creators.items = [
+            CreatorList.CreatorSummary(
+                resourceURI: "http://gateway.marvel.com/v1/public/creators/8571",
+                name: "Guru-eFX",
+                role: "colorist"
+            ),
+            CreatorList.CreatorSummary(
+                resourceURI: "http://gateway.marvel.com/v1/public/creators/9018",
+                name: "Mahmud Asrar",
+                role: "artist"
+            ),
+            CreatorList.CreatorSummary(
+                resourceURI: "http://gateway.marvel.com/v1/public/creators/8901",
+                name: "Kieron Gillen",
+                role: "writer"
+            )
+        ]
+        return creators
     }()
 }
