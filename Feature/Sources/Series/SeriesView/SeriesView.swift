@@ -20,6 +20,9 @@ public struct SeriesView: View {
                     if !viewStore.detail.isEmpty {
                         detailView
                     }
+                    if let comics = viewStore.comics {
+                        comicsView(comics)
+                    }
                     if let characters = viewStore.characters {
                         charactersView(characters)
                     }
@@ -50,8 +53,8 @@ public struct SeriesView: View {
                 contentMode: .fit)
             .cornerRadius(8.0)
             .shadow(color: Palette.red, radius: 8.0)
-            .padding([.leading, .trailing], 64.0)
-            .padding([.top, .bottom], 16.0)
+            .padding(.horizontal, 64.0)
+            .padding(.vertical, 16.0)
         }
     }
     
@@ -60,29 +63,45 @@ public struct SeriesView: View {
             Text(viewStore.detail)
                 .font(.body)
                 .foregroundColor(Palette.white)
-                .padding([.leading, .trailing], 16.0)
-                .padding([.top], 24.0)
+                .padding(.horizontal, 16.0)
+                .padding(.top, 24.0)
+        }
+    }
+    
+    func comicsView(_ comics: SeriesComicsList) -> some View {
+        VStack(spacing: 2.0) {
+            subtitleView(comics.name)
+            ForEach(0..<comics.items.count, id: \.self) { index in
+                HStack {
+                    Text(comics.items[index].name)
+                        .font(.headline)
+                        .fontWeight(.regular)
+                        .foregroundColor(Palette.white)
+                        .padding(.horizontal, 16.0)
+                        .padding(.top, 8.0)
+                    Spacer()
+                }
+                if index < comics.items.count {
+                    Rectangle()
+                        .frame(height: 1.0)
+                        .foregroundColor(Palette.lightGray)
+                        .padding(.horizontal, 32.0)
+                        .padding(.top, 4.0)
+                }
+            }
         }
     }
     
     func charactersView(_ characters: SeriesCharactersList) -> some View {
         VStack(spacing: .zero) {
-            HStack {
-                Text(characters.name)
-                    .font(.title2)
-                    .fontWeight(.medium)
-                    .foregroundColor(Palette.gray)
-                    .padding([.leading, .trailing], 16.0)
-                    .padding(.top, 8.0)
-                Spacer()
-            }
+            subtitleView(characters.name)
             HStack {
                 Text(characters.list)
                     .font(.headline)
                     .fontWeight(.regular)
                     .italic()
                     .foregroundColor(Palette.white)
-                    .padding([.leading, .trailing], 16.0)
+                    .padding(.horizontal, 16.0)
                     .padding(.top, 4.0)
                 Spacer()
             }
@@ -91,22 +110,14 @@ public struct SeriesView: View {
     
     func creatorsView(_ creators: SeriesCreatorsList) -> some View {
         VStack(spacing: .zero) {
-            HStack {
-                Text(creators.name)
-                    .font(.title2)
-                    .fontWeight(.medium)
-                    .foregroundColor(Palette.gray)
-                    .padding([.leading, .trailing], 16.0)
-                    .padding(.top, 4.0)
-                Spacer()
-            }
+            subtitleView(creators.name)
             ForEach(creators.list, id: \.self) { role in
                 HStack {
                     Text(role.title + ":")
-                        .font(.title3)
+                        .font(.headline)
                         .fontWeight(.regular)
                         .foregroundColor(Palette.gray)
-                        .padding([.leading, .trailing], 16.0)
+                        .padding(.horizontal, 16.0)
                         .padding(.top, 8.0)
                     Spacer()
                 }
@@ -116,11 +127,23 @@ public struct SeriesView: View {
                         .fontWeight(.regular)
                         .italic()
                         .foregroundColor(Palette.white)
-                        .padding([.leading, .trailing], 16.0)
+                        .padding(.horizontal, 16.0)
                         .padding(.top, 4.0)
                     Spacer()
                 }
             }
+        }
+    }
+    
+    func subtitleView(_ text: String) -> some View {
+        HStack {
+            Text(text)
+                .font(.title2)
+                .fontWeight(.medium)
+                .foregroundColor(Palette.gray)
+                .padding(.horizontal, 16.0)
+                .padding(.top, 4.0)
+            Spacer()
         }
     }
 }

@@ -101,3 +101,32 @@ public struct SeriesCreatorsList: Equatable, Identifiable {
         }
     }
 }
+
+public struct SeriesComicsList: Equatable, Identifiable {
+    public var id: String {
+        self.url
+    }
+    var name = "Comics"
+    var url = ""
+    var items: [Self.Item] = []
+    
+    public init(_ comics: ComicList) {
+        self.url = comics.collectionURI ?? ""
+        self.items = comics.items?.map({
+            Item($0)
+        }) ?? []
+    }
+    
+    public struct Item: Equatable, Identifiable, Hashable {
+        public var id: String {
+            self.url
+        }
+        var name = ""
+        var url = ""
+        
+        public init(_ item: ComicList.ComicSummary) {
+            self.name = item.name ?? ""
+            self.url = item.resourceURI ?? ""
+        }
+    }
+}

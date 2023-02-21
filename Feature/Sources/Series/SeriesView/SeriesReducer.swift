@@ -11,6 +11,7 @@ public struct SeriesReducer: ReducerProtocol {
         var imageUrl: URL
         var characters: SeriesCharactersList?
         var creators: SeriesCreatorsList?
+        var comics: SeriesComicsList?
         
         public init(_ series: Series) {
             self.id = series.id
@@ -22,6 +23,9 @@ public struct SeriesReducer: ReducerProtocol {
             }
             if let creators = series.creators, !(creators.items ?? []).isEmpty {
                 self.creators = SeriesCreatorsList(creators)
+            }
+            if let comics = series.comics, !(comics.items ?? []).isEmpty {
+                self.comics = SeriesComicsList(comics)
             }
         }
         

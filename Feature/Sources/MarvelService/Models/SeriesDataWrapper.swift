@@ -138,6 +138,7 @@ extension SeriesDataWrapper.SeriesDataContainer.Series {
         series.description = "BIG IRON! Tony Stark is looking to restart his engine. He decides he’s going back to basics, putting away his high-tech toys and high-profile image so he can get his hands dirty again. It’s time to dig into the guts of real machines, put on some old-fashioned metal and fly. But can he really lay that Stark-sized ego down? Life isn’t that simple, something that old friends and frustrating foes are quick to point out. If you strip down a billionaire to his bolts, does he run solid or just overheat? Tony’s going to find out once a threat to the entire universe rears its head from the past. As he suits up again, Tony remains sure of one thing: he’s still IRON MAN down to his flesh and blood core. "
         series.characters = .mock
         series.creators = .mock
+        series.comics = .mock
         
         return series
     }()
@@ -181,5 +182,29 @@ extension CreatorList {
             )
         ]
         return creators
+    }()
+}
+
+extension ComicList {
+    public static let mock: Self = {
+        var comics = ComicList()
+        comics.available = 3
+        comics.returned = 3
+        comics.collectionURI = "http://gateway.marvel.com/v1/public/series/16593/comics"
+        comics.items = [
+            ComicList.ComicSummary(
+                resourceURI: "http://gateway.marvel.com/v1/public/comics/43944",
+                name: "Iron Man (2012) #1"
+            ),
+            ComicList.ComicSummary(
+                resourceURI: "http://gateway.marvel.com/v1/public/comics/47357",
+                name: "Iron Man (2012) #1 (2nd Printing)"
+            ),
+            ComicList.ComicSummary(
+                resourceURI: "http://gateway.marvel.com/v1/public/comics/43952",
+                name: "Iron Man (2012) #2"
+            )
+        ]
+        return comics
     }()
 }
