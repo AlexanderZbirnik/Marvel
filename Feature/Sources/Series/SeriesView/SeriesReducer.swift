@@ -17,7 +17,8 @@ public struct SeriesReducer: ReducerProtocol {
             self.id = series.id
             self.title = series.title ?? ""
             self.detail = series.description ?? ""
-            self.imageUrl = Self.parseThumbnail(series.thumbnail)
+            self.imageUrl =
+            MImage.parseThumbnail(series.thumbnail, size: .portraitUncanny)
             if let characters = series.characters, !(characters.items ?? []).isEmpty {
                 self.characters = SeriesCharactersList(characters)
             }
@@ -26,25 +27,6 @@ public struct SeriesReducer: ReducerProtocol {
             }
             if let comics = series.comics, !(comics.items ?? []).isEmpty {
                 self.comics = SeriesComicsList(comics)
-            }
-        }
-        
-        static func parseThumbnail(_ image: MImage?) -> URL {
-            if var path = image?.path {
-                path = path.replacingOccurrences(of: "http:", with: "https:")
-                path += "/portrait_uncanny"
-                if let ext = image?.extension {
-                    path += ("." + ext)
-                } else {
-                    path += ".jpg"
-                }
-                if let url = URL(string: path) {
-                    return url
-                } else {
-                    return URL(string: "https://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available/portrait_uncanny.jpg")!
-                }
-            } else {
-                return URL(string: "https://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available/portrait_uncanny.jpg")!
             }
         }
     }

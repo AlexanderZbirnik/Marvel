@@ -8,6 +8,39 @@ public struct MUrl: Codable, Equatable {
 public struct MImage: Codable, Equatable {
     public var path: String?
     public var `extension`: String?
+    
+    public enum Size {
+        case standardMedium
+        case portraitUncanny
+        
+        var string: String {
+            switch self {
+            case.standardMedium:
+                return "/standard_medium"
+            case .portraitUncanny:
+                return "/portrait_uncanny"
+            }
+        }
+    }
+    
+    public static func parseThumbnail(_ image: MImage?, size: MImage.Size) -> URL {
+        if var path = image?.path {
+            path = path.replacingOccurrences(of: "http:", with: "https:")
+            path += size.string
+            if let ext = image?.extension {
+                path += ("." + ext)
+            } else {
+                path += ".jpg"
+            }
+            if let url = URL(string: path) {
+                return url
+            } else {
+                return URL(string: "https://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available\(size.string).jpg")!
+            }
+        } else {
+            return URL(string: "https://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available\(size.string).jpg")!
+        }
+    }
 }
 
 public struct ComicList: Codable, Equatable {
