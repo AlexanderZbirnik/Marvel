@@ -50,9 +50,12 @@ public struct SeriesItemReducer: ReducerProtocol {
         }
         Reduce { state, action in
             switch action {
-            case .onAppear, .series:
-                return .none
+            case .series:
+                Haptic.feedback(.soft)
+            default:
+                break
             }
+            return .none
         }
     }
 }
