@@ -9,7 +9,7 @@ import MarvelService
 struct AppReducer: ReducerProtocol {
     struct State: Equatable, Identifiable {
         let id = "app_id"
-        var tab: TabItem = .series
+        var tab: TabItem = .characters
         var series = SeriesListReducer.State()
         var characters = CharactersReducer.State()
         
@@ -47,9 +47,10 @@ struct AppReducer: ReducerProtocol {
                 return .none
             case .characters:
                 Log.action("AppReducer - characters")
-            case .tabSelected:
+            case let .tabSelected(tab):
                 Log.action("AppReducer - tabSelected")
                 Haptic.feedback(.selectionChanged)
+                state.tab = tab
             }
             return .none
         }

@@ -10,7 +10,7 @@ public struct SeriesClient: Sendable {
 extension SeriesClient: TestDependencyKey {
     public static let previewValue = Self(
         seriesList: { _ in
-            guard let result = await MockMarvelService.series() else {
+            guard let result = await MockMarvelService.seriesList() else {
                 return SeriesList()
             }
             var seriesList = SeriesList()
@@ -22,7 +22,7 @@ extension SeriesClient: TestDependencyKey {
     )
     
     public static let testValue = Self(
-        seriesList: XCTUnimplemented("\(Self.self).series")
+        seriesList: XCTUnimplemented("\(Self.self).seriesList")
     )
 }
 

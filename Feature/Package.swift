@@ -44,7 +44,8 @@ let package = Package(
                 "Common",
             ],
             resources: [
-                .process("Mocks/SeriesDataWrapper.json")
+                .process("Mocks/SeriesDataWrapper.json"),
+                .process("Mocks/CharacterDataWrapper.json"),
             ]),
         .testTarget(name: "MarvelServiceTests"),
     ]

@@ -60,8 +60,7 @@ extension SeriesListReducer {
     func loadSeriesAction(_ state: inout State) -> EffectTask<Action> {
         state.apiParameters["limit"] = "20"
         state.apiParameters["offset"] = "\(state.seriesItems.count)"
-        let parameters = state.apiParameters
-        return .task {
+        return .task { [parameters = state.apiParameters] in
             .seriesLoaded(try await seriesClient.seriesList(parameters))
         }
     }
