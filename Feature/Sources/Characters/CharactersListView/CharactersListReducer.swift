@@ -3,7 +3,7 @@ import ComposableArchitecture
 import Common
 import MarvelService
 
-public struct CharactersReducer: ReducerProtocol {
+public struct CharactersListReducer: ReducerProtocol {
     public struct State: Equatable, Identifiable {
         public var id = "series_id"
         public var apiParameters: [String: String] = [:]
@@ -39,7 +39,7 @@ public struct CharactersReducer: ReducerProtocol {
 
 // MARK: - Actions
 
-extension CharactersReducer {
+extension CharactersListReducer {
     func onAppearAction(_ state: inout State) -> EffectTask<Action> {
         Log.action("\(Self.self) - onAppear")
         if state.firstOnAppear {

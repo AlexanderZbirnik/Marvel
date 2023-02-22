@@ -48,7 +48,7 @@ struct AppView: View {
                 }
                 .tag(AppReducer.TabItem.series.rawValue)
 
-                CharactersView(
+                CharactersListView(
                     store: self.store.scope(
                         state: \.characters,
                         action: AppReducer.Action.characters

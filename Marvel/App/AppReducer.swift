@@ -11,7 +11,7 @@ struct AppReducer: ReducerProtocol {
         let id = "app_id"
         var tab: TabItem = .characters
         var series = SeriesListReducer.State()
-        var characters = CharactersReducer.State()
+        var characters = CharactersListReducer.State()
         
         init() {
             let apiParameters = marvelApiParameters()
@@ -28,7 +28,7 @@ struct AppReducer: ReducerProtocol {
     enum Action: Equatable {
         case onAppear
         case series(SeriesListReducer.Action)
-        case characters(CharactersReducer.Action)
+        case characters(CharactersListReducer.Action)
         case tabSelected(TabItem)
     }
     
@@ -37,7 +37,7 @@ struct AppReducer: ReducerProtocol {
             SeriesListReducer()
         }
         Scope(state: \.characters, action: /Action.characters) {
-            CharactersReducer()
+            CharactersListReducer()
         }
         Reduce { state, action in
             switch action {

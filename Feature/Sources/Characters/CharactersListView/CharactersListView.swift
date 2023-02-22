@@ -2,10 +2,10 @@ import SwiftUI
 import ComposableArchitecture
 import Common
 
-public struct CharactersView: View {
-    var store: StoreOf<CharactersReducer>
+public struct CharactersListView: View {
+    var store: StoreOf<CharactersListReducer>
     
-    public init(store: StoreOf<CharactersReducer>) {
+    public init(store: StoreOf<CharactersListReducer>) {
         self.store = store
     }
     
@@ -19,11 +19,11 @@ public struct CharactersView: View {
     }
 }
 
-public struct CharactersView_Previews: PreviewProvider {
+public struct CharactersListView_Previews: PreviewProvider {
     public static var previews: some View {
-        CharactersView(store: Store(
-            initialState: CharactersReducer.State(),
-            reducer: CharactersReducer())
+        CharactersListView(store: Store(
+            initialState: CharactersListReducer.State(),
+            reducer: CharactersListReducer())
         )
     }
 }
