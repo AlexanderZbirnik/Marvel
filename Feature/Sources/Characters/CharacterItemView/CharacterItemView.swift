@@ -40,17 +40,17 @@ public struct CharacterItemView: View {
                             .padding(.trailing)
                         Spacer()
                     }
-//                    NavigationLink {
-//                        SeriesView(
-//                            store: self.store.scope(
-//                                state: \.series,
-//                                action: SeriesItemReducer.Action.series
-//                            )
-//                        )
-//                    } label: {
-//                        EmptyView()
-//                    }
-//                    .opacity(.zero)
+                    NavigationLink {
+                        CharacterView(
+                            store: self.store.scope(
+                                state: \.character,
+                                action: CharacterItemReducer.Action.character
+                            )
+                        )
+                    } label: {
+                        EmptyView()
+                    }
+                    .opacity(.zero)
 
                 }
                 .onAppear {

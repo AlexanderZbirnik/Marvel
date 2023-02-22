@@ -12,7 +12,7 @@ public struct CharactersListView: View {
     
     public var body: some View {
         WithViewStore(self.store) { viewStore in
-            NavigationView {
+            NavigationStack {
                 ZStack {
                     Palette.darkGray
                         .ignoresSafeArea()
@@ -66,7 +66,7 @@ public struct CharactersListView: View {
     }
 }
 
-public struct SeriesListView_Previews: PreviewProvider {
+public struct CharactersListView_Previews: PreviewProvider {
     public static var previews: some View {
         CharactersListView(store: Store(
             initialState: CharactersListReducer.State(),

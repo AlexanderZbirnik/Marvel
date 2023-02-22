@@ -12,7 +12,7 @@ public struct SeriesListView: View {
     
     public var body: some View {
         WithViewStore(self.store) { viewStore in
-            NavigationView {
+            NavigationStack {
                 ZStack {
                     Palette.darkGray
                         .ignoresSafeArea()
