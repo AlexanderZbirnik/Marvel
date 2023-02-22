@@ -6,11 +6,9 @@ public struct MockMarvelService {
         guard let dataUrl = Bundle.module.url(forResource: "SeriesDataWrapper", withExtension: "json") else {
             return nil
         }
-        Log.action("dataUrl: \(dataUrl)")
         guard let data = try? Data(contentsOf: dataUrl) else {
             return nil
         }
-        Log.action("data: \(data)")
         return await decode(data: data)
     }
 }
