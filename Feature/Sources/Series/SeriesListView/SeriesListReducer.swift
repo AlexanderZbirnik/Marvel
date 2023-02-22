@@ -5,7 +5,7 @@ import Common
 
 public struct SeriesListReducer: ReducerProtocol {
     public struct State: Equatable, Identifiable {
-        public var id = "series_id"
+        public var id = "series_list_id"
         public var apiParameters: [String: String] = [:]
         var firstOnAppear = true
         var seriesItems: IdentifiedArrayOf<SeriesItemReducer.State> = []
