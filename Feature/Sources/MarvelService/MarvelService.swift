@@ -22,6 +22,21 @@ public struct MarvelService {
         return await Self.send(request)
     }
     
+    public static func charactersList(_ parameters: [String: String]) async -> Result<CharacterDataWrapper, MarvelApiError> {
+        var urlString = "https://gateway.marvel.com/v1/public/characters?"
+        for (key, value) in parameters {
+            urlString += (key + "=" + value)
+            urlString += "&"
+        }
+        urlString.removeLast()
+        guard let url = URL(string: urlString) else {
+            return .failure(.badUrl)
+        }
+        var request = URLRequest(url: url)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        return await Self.send(request)
+    }
+    
     static func send<T: Decodable>(_ request: URLRequest) async -> Result<T, MarvelApiError> {
       do {
         let (data, _) = try await URLSession.shared.data(for: request)

@@ -1,4 +1,6 @@
 import ComposableArchitecture
+import Common
+import MarvelService
 
 public struct CharactersReducer: ReducerProtocol {
     public struct State: Equatable, Identifiable {
@@ -10,7 +12,15 @@ public struct CharactersReducer: ReducerProtocol {
     
     public init() {}
     
-    public enum Action: Equatable {}
+    public enum Action: Equatable {
+        case onAppear
+    }
     
-    public func reduce(into state: inout State, action: Action) -> EffectTask<Action> {}
+    public func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
+        switch action {
+        case .onAppear:
+            Log.action("\(Self.self) - onAppear")
+        }
+        return .none
+    }
 }

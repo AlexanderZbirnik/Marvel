@@ -12,6 +12,9 @@ public struct CharactersView: View {
     public var body: some View {
         WithViewStore(self.store) { viewStore in
             Text("Characters")
+                .onAppear {
+                    viewStore.send(.onAppear)
+                }
         }
     }
 }
