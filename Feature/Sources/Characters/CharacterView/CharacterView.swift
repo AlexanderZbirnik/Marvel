@@ -23,6 +23,12 @@ public struct CharacterView: View {
                     if let comics = viewStore.comics {
                         comicsView(comics)
                     }
+                    if let series = viewStore.series {
+                        seriesView(series)
+                    }
+                    if let links = viewStore.links {
+                        linksView(links)
+                    }
                     Spacer()
                 }
             }
@@ -76,7 +82,7 @@ public struct CharacterView: View {
                         .padding(.top, 8.0)
                     Spacer()
                 }
-                if index < comics.items.count {
+                if index < comics.items.count - 1 {
                     Rectangle()
                         .frame(height: 1.0)
                         .foregroundColor(Palette.lightGray)
@@ -84,6 +90,52 @@ public struct CharacterView: View {
                         .padding(.top, 4.0)
                 }
             }
+        }
+    }
+    
+    func seriesView(_ series: PreviewSeriesList) -> some View {
+        VStack(spacing: 2.0) {
+            subtitleView(series.name)
+            ForEach(0..<series.items.count, id: \.self) { index in
+                HStack {
+                    Text(series.items[index].name)
+                        .font(.headline)
+                        .fontWeight(.regular)
+                        .foregroundColor(Palette.white)
+                        .padding(.horizontal, 16.0)
+                        .padding(.top, 8.0)
+                    Spacer()
+                }
+                if index < series.items.count - 1 {
+                    Rectangle()
+                        .frame(height: 1.0)
+                        .foregroundColor(Palette.lightGray)
+                        .padding(.horizontal, 32.0)
+                        .padding(.top, 4.0)
+                }
+            }
+        }
+    }
+    
+    func linksView(_ links: PreviewLinksList) -> some View {
+        VStack(spacing: 2.0) {
+            subtitleView(links.name)
+            HStack {
+                ForEach(0..<links.links.count, id: \.self) { index in
+                    Link(links.types[index],
+                         destination: links.links[index])
+                    .foregroundColor(Palette.red)
+                    if index < links.links.count - 1 {
+                        Circle()
+                            .frame(width: 3.0)
+                            .foregroundColor(Palette.red)
+                            .offset(y: 2.0)
+                    }
+                }
+                Spacer()
+            }
+            .padding(.horizontal, 16.0)
+            .padding(.vertical, 8.0)
         }
     }
     

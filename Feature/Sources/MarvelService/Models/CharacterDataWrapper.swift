@@ -50,7 +50,42 @@ extension CharacterDataWrapper.CharacterDataContainer.Character {
         character.thumbnail?.path = "http://i.annihil.us/u/prod/marvel/i/mg/9/c0/527bb7b37ff55"
         character.thumbnail?.extension = "jpg"
         character.description = "Wounded, captured and forced to build a weapon by his enemies, billionaire industrialist Tony Stark instead created an advanced suit of armor to save his life and escape captivity. Now with a new outlook on life, Tony uses his money and intelligence to make the world a safer, better place as Iron Man."
+        character.comics = .mock
+        character.series = .mock
+        character.urls = [
+            MUrl(type: "detail",
+                 url: "http://marvel.com/comics/characters/1009368/iron_man?utm_campaign=apiRef&utm_source=a0e20b6e3044ac0bdea022dabdeddf1a"),
+            MUrl(type: "wiki",
+                 url: "http://marvel.com/universe/Iron_Man_(Anthony_Stark)?utm_campaign=apiRef&utm_source=a0e20b6e3044ac0bdea022dabdeddf1a"),
+            MUrl(type: "comiclink",
+                 url: "http://marvel.com/comics/characters/1009368/iron_man?utm_campaign=apiRef&utm_source=a0e20b6e3044ac0bdea022dabdeddf1a")
+        ]
         
         return character
     }()
 }
+
+extension SeriesList {
+    public static let mock: Self = {
+        var series = SeriesList()
+        series.available = 3
+        series.returned = 3
+        series.collectionURI = "http://gateway.marvel.com/v1/public/characters/1009368/series"
+        series.items = [
+            SeriesList.SeriesSummary(
+                resourceURI: "http://gateway.marvel.com/v1/public/series/16450",
+                name: "A+X (2012 - 2014)"
+            ),
+            SeriesList.SeriesSummary(
+                resourceURI: "http://gateway.marvel.com/v1/public/series/6079",
+                name: "Adam: Legend of the Blue Marvel (2008)"
+            ),
+            SeriesList.SeriesSummary(
+                resourceURI: "http://gateway.marvel.com/v1/public/series/27392",
+                name: "Aero (2019 - 2020)"
+            )
+        ]
+        return series
+    }()
+}
+

@@ -2,7 +2,7 @@ import Foundation
 
 public struct MUrl: Codable, Equatable {
     public var type: String?
-    public var ur: String?
+    public var url: String?
 }
 
 public struct MImage: Codable, Equatable {
@@ -149,3 +149,52 @@ public struct PreviewComicsList: Equatable, Identifiable {
         }
     }
 }
+
+public struct PreviewSeriesList: Equatable, Identifiable {
+    public var id: String {
+        self.url
+    }
+    public var name = "Series"
+    public var url = ""
+    public var items: [Self.Item] = []
+    
+    public init(_ comics: SeriesList) {
+        self.url = comics.collectionURI ?? ""
+        self.items = comics.items?.map({
+            Item($0)
+        }) ?? []
+    }
+    
+    public struct Item: Equatable, Identifiable, Hashable {
+        public var id: String {
+            self.url
+        }
+        public var name = ""
+        public var url = ""
+        
+        public init(_ item: SeriesList.SeriesSummary) {
+            self.name = item.name ?? ""
+            self.url = item.resourceURI ?? ""
+        }
+    }
+}
+
+public struct PreviewLinksList: Equatable, Identifiable {
+    public var id: String {
+        self.name
+    }
+    public var name = "Links"
+    public var types: [String] = []
+    public var links: [URL] = []
+    
+    public init(_ urls: [MUrl]) {
+        for url in urls {
+            if let link = URL(string: url.url ?? "") {
+                types.append(url.type ?? "")
+                links.append(link)
+            }
+        }
+    }
+}
+
+

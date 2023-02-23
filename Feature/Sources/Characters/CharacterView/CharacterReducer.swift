@@ -10,6 +10,8 @@ public struct CharacterReducer: ReducerProtocol {
         var detail = ""
         var imageUrl: URL
         var comics: PreviewComicsList?
+        var series: PreviewSeriesList?
+        var links: PreviewLinksList?
         
         public init(_ character: Character) {
             self.id = character.id
@@ -19,6 +21,12 @@ public struct CharacterReducer: ReducerProtocol {
             MImage.parseThumbnail(character.thumbnail, size: .standardFantastic)
             if let comics = character.comics, !(comics.items ?? []).isEmpty {
                 self.comics = PreviewComicsList(comics)
+            }
+            if let series = character.series, !(series.items ?? []).isEmpty {
+                self.series = PreviewSeriesList(series)
+            }
+            if !character.urls.isEmpty {
+                self.links = PreviewLinksList(character.urls)
             }
         }
     }
