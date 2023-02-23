@@ -68,7 +68,7 @@ public struct SeriesView: View {
         }
     }
     
-    func comicsView(_ comics: SeriesComicsList) -> some View {
+    func comicsView(_ comics: PreviewComicsList) -> some View {
         VStack(spacing: 2.0) {
             subtitleView(comics.name)
             ForEach(0..<comics.items.count, id: \.self) { index in

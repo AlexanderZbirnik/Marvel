@@ -120,3 +120,32 @@ public struct SeriesList: Codable, Equatable {
         public var name: String?
     }
 }
+
+public struct PreviewComicsList: Equatable, Identifiable {
+    public var id: String {
+        self.url
+    }
+    public var name = "Comics"
+    public var url = ""
+    public var items: [Self.Item] = []
+    
+    public init(_ comics: ComicList) {
+        self.url = comics.collectionURI ?? ""
+        self.items = comics.items?.map({
+            Item($0)
+        }) ?? []
+    }
+    
+    public struct Item: Equatable, Identifiable, Hashable {
+        public var id: String {
+            self.url
+        }
+        public var name = ""
+        public var url = ""
+        
+        public init(_ item: ComicList.ComicSummary) {
+            self.name = item.name ?? ""
+            self.url = item.resourceURI ?? ""
+        }
+    }
+}
