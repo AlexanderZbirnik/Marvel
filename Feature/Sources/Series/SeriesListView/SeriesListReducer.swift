@@ -5,14 +5,23 @@ import Common
 
 public struct SeriesListReducer: ReducerProtocol {
     public struct State: Equatable, Identifiable {
-        public var id = "series_list_id"
-        public var apiParameters: [String: String] = [:]
+        public var id: String {
+            if self.seriesUrl.isEmpty {
+                return "series_list_id"
+            }
+            return self.seriesUrl
+        }
+        public var seriesUrl: String
+        public var apiParameters: [String: String]
         var firstOnAppear = true
         var seriesItems: IdentifiedArrayOf<SeriesItemReducer.State> = []
         var copyright = AttributedString()
         var showFooter = false
         
-        public init() {}
+        public init(seriesUrl: String = "", apiParameters: [String: String]) {
+            self.seriesUrl = seriesUrl
+            self.apiParameters = apiParameters
+        }
     }
     
     public init() {}
@@ -60,8 +69,9 @@ extension SeriesListReducer {
     func loadSeriesAction(_ state: inout State) -> EffectTask<Action> {
         state.apiParameters["limit"] = "20"
         state.apiParameters["offset"] = "\(state.seriesItems.count)"
-        return .task { [parameters = state.apiParameters] in
-            .seriesLoaded(try await seriesClient.seriesList(parameters))
+        
+        return .task { [parameters = state.apiParameters, url = state.seriesUrl] in
+            .seriesLoaded(try await seriesClient.seriesList(parameters, url))
         }
     }
     

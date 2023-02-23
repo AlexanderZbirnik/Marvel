@@ -5,14 +5,23 @@ import MarvelService
 
 public struct CharactersListReducer: ReducerProtocol {
     public struct State: Equatable, Identifiable {
-        public var id = "characters_list_id"
+        public var id: String {
+            if self.charactersUrl.isEmpty {
+                return "characters_list_id"
+            }
+            return self.charactersUrl
+        }
+        public var charactersUrl: String
         public var apiParameters: [String: String] = [:]
         var firstOnAppear = true
         var charactersItems: IdentifiedArrayOf<CharacterItemReducer.State> = []
         var copyright = AttributedString()
         var showFooter = false
         
-        public init() {}
+        public init(charactersUrl: String = "", apiParameters: [String: String]) {
+            self.charactersUrl = charactersUrl
+            self.apiParameters = apiParameters
+        }
     }
     
     public init() {}

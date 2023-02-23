@@ -69,7 +69,7 @@ public struct CharactersListView: View {
 public struct CharactersListView_Previews: PreviewProvider {
     public static var previews: some View {
         CharactersListView(store: Store(
-            initialState: CharactersListReducer.State(),
+            initialState: CharactersListReducer.State(apiParameters: [:]),
             reducer: CharactersListReducer())
         )
     }

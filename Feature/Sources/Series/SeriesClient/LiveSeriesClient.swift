@@ -4,8 +4,8 @@ import MarvelService
 
 extension SeriesClient: DependencyKey {
     public static let liveValue = Self(
-        seriesList: { parameters in
-            if case let .success(result) = await MarvelService.seriesList(parameters) {
+        seriesList: { parameters, url in
+            if case let .success(result) = await MarvelService.seriesList(parameters, url: url) {
                 var seriesList = SeriesList()
                 seriesList.attributionHTML =
                 result.attributionHTML ?? seriesList.attributionHTML

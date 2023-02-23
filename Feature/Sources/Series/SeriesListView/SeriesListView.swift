@@ -1,6 +1,7 @@
 import SwiftUI
 import ComposableArchitecture
 import Common
+import MarvelService
 
 public struct SeriesListView: View {
     var store: StoreOf<SeriesListReducer>
@@ -69,7 +70,7 @@ public struct SeriesListView: View {
 public struct SeriesListView_Previews: PreviewProvider {
     public static var previews: some View {
         SeriesListView(store: Store(
-            initialState: SeriesListReducer.State(),
+            initialState: SeriesListReducer.State(apiParameters: [:]),
             reducer: SeriesListReducer())
         )
     }
