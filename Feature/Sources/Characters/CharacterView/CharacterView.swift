@@ -140,24 +140,15 @@ public struct CharacterView: View {
     }
     
     func subtitleView(_ text: String) -> some View {
-        ZStack {
-            Palette.lightGray
-            HStack {
-                Text(text)
-                    .font(.title2)
-                    .fontWeight(.medium)
-                    .foregroundColor(Palette.gray)
-                    .padding(.horizontal, 16.0)
-                    .padding(.vertical, 2.0)
-                Spacer()
-                Button("more") {
-                    Log.action("Tapped more")
-                }
-                .foregroundColor(Palette.red)
+        HStack {
+            Text(text)
+                .font(.title2)
+                .fontWeight(.medium)
+                .foregroundColor(Palette.gray)
                 .padding(.horizontal, 16.0)
-            }
+                .padding(.top, 4.0)
+            Spacer()
         }
-        .padding(.top, 4.0)
     }
 }
 

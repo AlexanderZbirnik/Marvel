@@ -8,7 +8,6 @@
 import SwiftUI
 import ComposableArchitecture
 import Common
-import MarvelService
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(
@@ -31,7 +30,7 @@ struct MarvelApp: App {
     var body: some Scene {
         WindowGroup {
             AppView(store: Store(
-                initialState: AppReducer.State(apiParameters: MarvelService.marvelApiParameters()),
+                initialState: AppReducer.State(),
                 reducer: AppReducer())
             )
             .environment(\.colorScheme, .dark)
