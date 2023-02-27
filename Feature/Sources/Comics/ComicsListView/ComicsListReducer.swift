@@ -20,6 +20,8 @@ public struct ComicsListReducer: ReducerProtocol {
         case onAppear
     }
     
+    @Dependency(\.comicsClient) var comicsClient
+    
     public var body: some ReducerProtocol<State, Action> {
         Reduce { state, action in
             switch action {

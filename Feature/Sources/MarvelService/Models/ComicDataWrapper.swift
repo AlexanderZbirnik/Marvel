@@ -37,16 +37,16 @@ extension ComicsDataWrapper.ComicDataContainer {
         public var ean: String?
         public var issn: String?
         public var format: String?
-        public var pageCount: String?
-        public var  textObjects: [TextObject] = []
+        public var pageCount: Int?
+        public var textObjects: [TextObject] = []
         public var resourceURI: String?
         public var urls: [MUrl]?
         public var series: SeriesList?
         public var variants: [ComicList.ComicSummary]?
         public var collections: [ComicList.ComicSummary]?
         public var collectedIssues: [ComicList.ComicSummary]?
-        public var  dates: [ComicDate]?
-        public var  prices: [ComicPrice]?
+        public var dates: [ComicDate]?
+        public var prices: [ComicPrice]?
         public var thumbnail: MImage?
         public var images: [MImage]?
         public var creators: CreatorList?

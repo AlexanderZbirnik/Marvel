@@ -21,6 +21,16 @@ public struct MockMarvelService {
         }
         return await decode(data: data)
     }
+    
+    public static func comicsList() async -> ComicsDataWrapper? {
+        guard let dataUrl = Bundle.module.url(forResource: "ComicsDataWrapper", withExtension: "json") else {
+            return nil
+        }
+        guard let data = try? Data(contentsOf: dataUrl) else {
+            return nil
+        }
+        return await decode(data: data)
+    }
 }
 
 func decode<T: Decodable>(data: Data) async -> T? {
