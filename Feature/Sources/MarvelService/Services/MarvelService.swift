@@ -8,22 +8,37 @@ public struct MarvelService {
     }
     
     public static func seriesList(_ parameters: [String: String]) async -> Result<SeriesDataWrapper, MarvelApiError> {
-        var urlString = "https://gateway.marvel.com/v1/public/series?"
-        for (key, value) in parameters {
-            urlString += (key + "=" + value)
-            urlString += "&"
+        let url = "https://gateway.marvel.com/v1/public/series?"
+        switch await Self.request(parameters, url: url) {
+        case let .success(request):
+            return await Self.send(request)
+        case let .failure(error):
+            return.failure(error)
         }
-        urlString.removeLast()
-        guard let url = URL(string: urlString) else {
-            return .failure(.badUrl)
-        }
-        var request = URLRequest(url: url)
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        return await Self.send(request)
     }
     
     public static func charactersList(_ parameters: [String: String]) async -> Result<CharacterDataWrapper, MarvelApiError> {
-        var urlString = "https://gateway.marvel.com/v1/public/characters?"
+        let url = "https://gateway.marvel.com/v1/public/characters?"
+        switch await Self.request(parameters, url: url) {
+        case let .success(request):
+            return await Self.send(request)
+        case let .failure(error):
+            return.failure(error)
+        }
+    }
+    
+    public static func comicsList(_ parameters: [String: String]) async -> Result<ComicsDataWrapper, MarvelApiError> {
+        let url = "https://gateway.marvel.com/v1/public/comics?"
+        switch await Self.request(parameters, url: url) {
+        case let .success(request):
+            return await Self.send(request)
+        case let .failure(error):
+            return.failure(error)
+        }
+    }
+    
+    static func request(_ parameters: [String: String], url: String) async -> Result<URLRequest, MarvelApiError> {
+        var urlString = url
         for (key, value) in parameters {
             urlString += (key + "=" + value)
             urlString += "&"
@@ -34,7 +49,7 @@ public struct MarvelService {
         }
         var request = URLRequest(url: url)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        return await Self.send(request)
+        return .success(request)
     }
     
     static func send<T: Decodable>(_ request: URLRequest) async -> Result<T, MarvelApiError> {
