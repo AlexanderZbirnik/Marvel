@@ -10,6 +10,7 @@ let package = Package(
         .library(name: "Common", targets: ["Common"]),
         .library(name: "Series", targets: ["Series"]),
         .library(name: "Characters", targets: ["Characters"]),
+        .library(name: "Comics", targets: ["Comics"]),
         .library(name: "MarvelService", targets: ["MarvelService"]),
     ],
     dependencies: [
@@ -38,6 +39,15 @@ let package = Package(
                 .product(name: "Tagged", package: "swift-tagged"),
             ]),
         .testTarget(name: "CharactersTests"),
+        .target(
+            name: "Comics",
+            dependencies: [
+                "Common",
+                "MarvelService",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                .product(name: "Tagged", package: "swift-tagged"),
+            ]),
+        .testTarget(name: "ComicsTests"),
         .target(
             name: "MarvelService",
             dependencies: [

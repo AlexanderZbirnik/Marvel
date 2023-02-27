@@ -3,32 +3,38 @@ import Common
 import SwiftUI
 import Series
 import Characters
+import Comics
 import CryptoKit
 import MarvelService
+
 
 struct AppReducer: ReducerProtocol {
     struct State: Equatable, Identifiable {
         let id = "app_id"
-        var tab: TabItem = .characters
+        var tab: TabItem = .comics
         var series = SeriesListReducer.State()
         var characters = CharactersListReducer.State()
+        var comics = ComicsListReducer.State()
         
         init() {
             let apiParameters = marvelApiParameters()
             self.series.apiParameters = apiParameters
             self.characters.apiParameters = apiParameters
+            self.comics.apiParameters = apiParameters
         }
     }
     
     enum TabItem: Int {
         case series
         case characters
+        case comics
     }
     
     enum Action: Equatable {
         case onAppear
         case series(SeriesListReducer.Action)
         case characters(CharactersListReducer.Action)
+        case comics(ComicsListReducer.Action)
         case tabSelected(TabItem)
     }
     
@@ -39,6 +45,9 @@ struct AppReducer: ReducerProtocol {
         Scope(state: \.characters, action: /Action.characters) {
             CharactersListReducer()
         }
+        Scope(state: \.comics, action: /Action.comics) {
+            ComicsListReducer()
+        }
         Reduce { state, action in
             switch action {
             case .onAppear, .characters, .series:
@@ -46,6 +55,8 @@ struct AppReducer: ReducerProtocol {
             case let .tabSelected(tab):
                 Haptic.feedback(.selectionChanged)
                 state.tab = tab
+            case .comics:
+                Log.action("\(Self.self) - comics")
             }
             return .none
         }

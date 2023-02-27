@@ -10,6 +10,7 @@
 		6B0455F12989582200849B99 /* MarvelService in Frameworks */ = {isa = PBXBuildFile; productRef = 6B0455F02989582200849B99 /* MarvelService */; };
 		6B1388F22983023200960F52 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B1388F12983023200960F52 /* AppView.swift */; };
 		6B1388F42983024D00960F52 /* AppReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B1388F32983024D00960F52 /* AppReducer.swift */; };
+		6B59D6B829AD25B70072501F /* Comics in Frameworks */ = {isa = PBXBuildFile; productRef = 6B59D6B729AD25B70072501F /* Comics */; };
 		6B80DF0529804C15003BD961 /* MarvelApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B80DF0429804C15003BD961 /* MarvelApp.swift */; };
 		6B80DF0929804C16003BD961 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6B80DF0829804C16003BD961 /* Assets.xcassets */; };
 		6B80DF0C29804C16003BD961 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6B80DF0B29804C16003BD961 /* Preview Assets.xcassets */; };
@@ -38,6 +39,7 @@
 			files = (
 				6BBBC9072984646C00533A84 /* Tagged in Frameworks */,
 				6BBBC9042984645A00533A84 /* ComposableArchitecture in Frameworks */,
+				6B59D6B829AD25B70072501F /* Comics in Frameworks */,
 				6BBBC9012984643A00533A84 /* Series in Frameworks */,
 				6BBBC8FB2984640F00533A84 /* Characters in Frameworks */,
 				6BBBC8FD2984643A00533A84 /* Common in Frameworks */,
@@ -132,6 +134,7 @@
 				6BBBC9032984645A00533A84 /* ComposableArchitecture */,
 				6BBBC9062984646C00533A84 /* Tagged */,
 				6B0455F02989582200849B99 /* MarvelService */,
+				6B59D6B729AD25B70072501F /* Comics */,
 			);
 			productName = Marvel;
 			productReference = 6B80DF0129804C15003BD961 /* Marvel.app */;
@@ -427,6 +430,10 @@
 		6B0455F02989582200849B99 /* MarvelService */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MarvelService;
+		};
+		6B59D6B729AD25B70072501F /* Comics */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Comics;
 		};
 		6BBBC8FA2984640F00533A84 /* Characters */ = {
 			isa = XCSwiftPackageProductDependency;

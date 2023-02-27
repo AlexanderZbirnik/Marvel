@@ -3,6 +3,7 @@ import ComposableArchitecture
 import Common
 import Series
 import Characters
+import Comics
 
 struct AppView: View {
     var store: StoreOf<AppReducer>
@@ -44,7 +45,7 @@ struct AppView: View {
                     )
                 )
                 .tabItem {
-                    Label("Series", systemImage: "magazine")
+                    Label("Series", systemImage: "books.vertical")
                 }
                 .tag(AppReducer.TabItem.series.rawValue)
 
@@ -58,6 +59,17 @@ struct AppView: View {
                     Label("Characters", systemImage: "person.3")
                 }
                 .tag(AppReducer.TabItem.characters.rawValue)
+                
+                ComicsListView(
+                    store: self.store.scope(
+                        state: \.comics,
+                        action: AppReducer.Action.comics
+                    )
+                )
+                .tabItem {
+                    Label("Comics", systemImage: "magazine")
+                }
+                .tag(AppReducer.TabItem.comics.rawValue)
             }
             .accentColor(Palette.red)
         }
