@@ -56,6 +56,7 @@ let package = Package(
             resources: [
                 .process("Mocks/SeriesDataWrapper.json"),
                 .process("Mocks/CharacterDataWrapper.json"),
+                .process("Mocks/ComicDataWrapper.json"),
             ]),
         .testTarget(name: "MarvelServiceTests"),
     ]
