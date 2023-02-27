@@ -41,14 +41,9 @@ struct AppReducer: ReducerProtocol {
         }
         Reduce { state, action in
             switch action {
-            case .onAppear:
-                Log.action("AppReducer - onAppear")
-            case .series:
-                return .none
-            case .characters:
-                Log.action("AppReducer - characters")
+            case .onAppear, .characters, .series:
+                break
             case let .tabSelected(tab):
-                Log.action("AppReducer - tabSelected")
                 Haptic.feedback(.selectionChanged)
                 state.tab = tab
             }
