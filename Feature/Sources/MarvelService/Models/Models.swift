@@ -121,6 +121,22 @@ public struct SeriesList: Codable, Equatable {
     }
 }
 
+public struct TextObject: Codable, Equatable {
+    public var type: String?
+    public var language: String?
+    public var text: String?
+}
+
+public struct ComicDate: Codable, Equatable {
+    public var type: String?
+    public var date: String?
+}
+
+public struct ComicPrice: Codable, Equatable {
+    public var type: String?
+    public var price: Float?
+}
+
 public struct PreviewComicsList: Equatable, Identifiable {
     public var id: String {
         self.url
