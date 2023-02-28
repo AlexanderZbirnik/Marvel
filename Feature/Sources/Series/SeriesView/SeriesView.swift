@@ -92,7 +92,7 @@ public struct SeriesView: View {
         }
     }
     
-    func charactersView(_ characters: SeriesCharactersList) -> some View {
+    func charactersView(_ characters: PreviewCharactersList) -> some View {
         VStack(spacing: .zero) {
             subtitleView(characters.name)
             HStack {

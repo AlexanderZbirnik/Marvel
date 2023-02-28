@@ -9,7 +9,7 @@ public struct SeriesReducer: ReducerProtocol {
         var title = ""
         var detail = ""
         var imageUrl: URL
-        var characters: SeriesCharactersList?
+        var characters: PreviewCharactersList?
         var creators: SeriesCreatorsList?
         var comics: PreviewComicsList?
         
@@ -20,7 +20,7 @@ public struct SeriesReducer: ReducerProtocol {
             self.imageUrl =
             MImage.parseThumbnail(series.thumbnail, size: .portraitUncanny)
             if let characters = series.characters, !(characters.items ?? []).isEmpty {
-                self.characters = SeriesCharactersList(characters)
+                self.characters = PreviewCharactersList(characters)
             }
             if let creators = series.creators, !(creators.items ?? []).isEmpty {
                 self.creators = SeriesCreatorsList(creators)

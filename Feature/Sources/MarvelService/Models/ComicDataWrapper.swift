@@ -67,8 +67,14 @@ extension ComicsDataWrapper.ComicDataContainer.Comics {
         comics.title = "Iron Man (2022) #4"
         comics.thumbnail?.path = "http://i.annihil.us/u/prod/marvel/i/mg/c/a0/63dd8945aa5af"
         comics.thumbnail?.extension = "jpg"
-        comics.description = nil
+        comics.description = "IRON MAN VS. IRONHEART! The assassination attempts on Tony's life continue as a familiar foe returns to take him down. It'll be up to Iron Man and Ironheart to stop him…but what secret is Riri Williams harboring from Tony? And will this change their relationship forever?"
         comics.series = .mock
+        comics.isbn = "978-1-302-93270-1"
+        comics.ean = "9781302 932701 51999"
+        comics.upc = "75960620424300331"
+        comics.diamondCode = "💎diamondCode💎"
+        comics.format = "Comic"
+        comics.pageCount = 32
         comics.urls = [
             MUrl(type: "detail",
                  url: "http://marvel.com/comics/characters/1009368/iron_man?utm_campaign=apiRef&utm_source=a0e20b6e3044ac0bdea022dabdeddf1a"),

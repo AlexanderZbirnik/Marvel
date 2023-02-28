@@ -43,18 +43,17 @@ public struct ComicsItemView: View {
                             .padding(.trailing)
                         Spacer()
                     }
-//                    NavigationLink {
-//                        CharacterView(
-//                            store: self.store.scope(
-//                                state: \.character,
-//                                action: CharacterItemReducer.Action.character
-//                            )
-//                        )
-//                    } label: {
-//                        EmptyView()
-//                    }
-//                    .opacity(.zero)
-
+                    NavigationLink {
+                        ComicsView(
+                            store: self.store.scope(
+                                state: \.comics,
+                                action: ComicsItemReducer.Action.comics
+                            )
+                        )
+                    } label: {
+                        EmptyView()
+                    }
+                    .opacity(.zero)
                 }
                 .onAppear {
                     viewStore.send(.onAppear)

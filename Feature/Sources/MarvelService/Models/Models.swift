@@ -216,4 +216,39 @@ public struct PreviewLinksList: Equatable, Identifiable {
     }
 }
 
+public struct PreviewCharactersList: Equatable, Identifiable {
+    public var id: String {
+        self.url
+    }
+    public var name = "Characters"
+    public var url = ""
+    public var items: [Self.Item] = []
+    public var list: String {
+        let names = self.items.map {
+            $0.name
+        }
+        return names.joined(separator: ", ")
+    }
+    
+    public init(_ characters: CharacterList) {
+        self.url = characters.collectionURI ?? ""
+        self.items = characters.items?.map({
+            Item($0)
+        }) ?? []
+    }
+    
+    public struct Item: Equatable, Identifiable {
+        public var id: String {
+            self.url
+        }
+        var name = ""
+        var url = ""
+        
+        public init(_ item: CharacterList.CharacterSummary) {
+            self.name = item.name ?? ""
+            self.url = item.resourceURI ?? ""
+        }
+    }
+}
+
 
