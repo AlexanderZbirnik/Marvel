@@ -12,6 +12,7 @@ public struct MImage: Codable, Equatable {
     public enum Size {
         case standardMedium
         case portraitUncanny
+        case portraitMedium
         case standardFantastic
         
         var string: String {
@@ -20,6 +21,8 @@ public struct MImage: Codable, Equatable {
                 return "/standard_medium"
             case .portraitUncanny:
                 return "/portrait_uncanny"
+            case .portraitMedium:
+                return "/portrait_medium"
             case .standardFantastic:
                 return"/standard_fantastic"
             }

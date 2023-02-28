@@ -29,6 +29,7 @@ extension ComicsDataWrapper.ComicDataContainer {
         public var digitalId: Int?
         public var issueNumber: Double?
         public var variantDescription: String?
+        public var title: String?
         public var description: String?
         public var modified: String?
         public var isbn: String?
@@ -56,4 +57,27 @@ extension ComicsDataWrapper.ComicDataContainer {
 
         public typealias Id = Tagged<Comics, Int>
     }
+}
+
+// MARK: - Mocks
+
+extension ComicsDataWrapper.ComicDataContainer.Comics {
+    public static let mock: Self = {
+        var comics = Self(id: .init(101532))
+        comics.title = "Iron Man (2022) #4"
+        comics.thumbnail?.path = "http://i.annihil.us/u/prod/marvel/i/mg/c/a0/63dd8945aa5af"
+        comics.thumbnail?.extension = "jpg"
+        comics.description = nil
+        comics.series = .mock
+        comics.urls = [
+            MUrl(type: "detail",
+                 url: "http://marvel.com/comics/characters/1009368/iron_man?utm_campaign=apiRef&utm_source=a0e20b6e3044ac0bdea022dabdeddf1a"),
+            MUrl(type: "wiki",
+                 url: "http://marvel.com/universe/Iron_Man_(Anthony_Stark)?utm_campaign=apiRef&utm_source=a0e20b6e3044ac0bdea022dabdeddf1a"),
+            MUrl(type: "comiclink",
+                 url: "http://marvel.com/comics/characters/1009368/iron_man?utm_campaign=apiRef&utm_source=a0e20b6e3044ac0bdea022dabdeddf1a")
+        ]
+        
+        return comics
+    }()
 }
