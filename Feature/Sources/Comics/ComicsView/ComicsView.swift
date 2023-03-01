@@ -20,33 +20,20 @@ public struct ComicsView: View {
                     if !viewStore.detail.isEmpty {
                         detailView
                     }
-                    if !viewStore.format.isEmpty {
-                        codeView("Format:", code: viewStore.format)
+                    if let characters = viewStore.characters {
+                        charactersView(characters)
                     }
-                    if viewStore.pageCount != 0 {
-                        codeView("Page count:", code: "\(viewStore.pageCount)")
+                    if let creators = viewStore.creators {
+                        creatorsView(creators)
                     }
                     if let series = viewStore.series {
                         seriesView(series)
                     }
-                    if !viewStore.isbn.isEmpty {
-                        codeView("ISBN:", code: viewStore.isbn)
+                    formatPagesView
+                    codesView
+                    if let links = viewStore.links {
+                        linksView(links)
                     }
-                    if !viewStore.ean.isEmpty {
-                        codeView("EAN:", code: viewStore.ean)
-                    }
-                    if !viewStore.upc.isEmpty {
-                        codeView("UPC:", code: viewStore.upc)
-                    }
-                    if !viewStore.diamondCode.isEmpty {
-                        codeView("DIAMOND CODE:", code: viewStore.diamondCode)
-                    }
-//                    if let characters = viewStore.characters {
-//                        charactersView(characters)
-//                    }
-//                    if let creators = viewStore.creators {
-//                        creatorsView(creators)
-//                    }
                     Spacer()
                 }
             }
@@ -150,32 +137,32 @@ public struct ComicsView: View {
         }
     }
     
-//    func creatorsView(_ creators: SeriesCreatorsList) -> some View {
-//        VStack(spacing: .zero) {
-//            subtitleView(creators.name)
-//            ForEach(creators.list, id: \.self) { role in
-//                HStack {
-//                    Text(role.title + ":")
-//                        .font(.headline)
-//                        .fontWeight(.regular)
-//                        .foregroundColor(Palette.gray)
-//                        .padding(.horizontal, 16.0)
-//                        .padding(.top, 8.0)
-//                    Spacer()
-//                }
-//                HStack {
-//                    Text(role.names)
-//                        .font(.headline)
-//                        .fontWeight(.regular)
-//                        .italic()
-//                        .foregroundColor(Palette.white)
-//                        .padding(.horizontal, 16.0)
-//                        .padding(.top, 4.0)
-//                    Spacer()
-//                }
-//            }
-//        }
-//    }
+    func creatorsView(_ creators: PreviewCreatorsList) -> some View {
+        VStack(spacing: .zero) {
+            subtitleView(creators.name)
+            ForEach(creators.list, id: \.self) { role in
+                HStack {
+                    Text(role.title + ":")
+                        .font(.headline)
+                        .fontWeight(.regular)
+                        .foregroundColor(Palette.gray)
+                        .padding(.horizontal, 16.0)
+                        .padding(.top, 8.0)
+                    Spacer()
+                }
+                HStack {
+                    Text(role.names)
+                        .font(.headline)
+                        .fontWeight(.regular)
+                        .italic()
+                        .foregroundColor(Palette.white)
+                        .padding(.horizontal, 16.0)
+                        .padding(.top, 4.0)
+                    Spacer()
+                }
+            }
+        }
+    }
     
     func subtitleView(_ text: String) -> some View {
         HStack {
@@ -189,6 +176,42 @@ public struct ComicsView: View {
         }
     }
     
+    var formatPagesView: some View {
+        WithViewStore(self.store) { viewStore in
+            VStack {
+                if !viewStore.format.isEmpty {
+                    codeView("Format:", code: viewStore.format)
+                }
+                if viewStore.pageCount != 0 {
+                    codeView("Page count:", code: "\(viewStore.pageCount)")
+                }
+                EmptyView()
+                    .hidden()
+            }
+        }
+    }
+    
+    var codesView: some View {
+        WithViewStore(self.store) { viewStore in
+            VStack(spacing: .zero) {
+                if !viewStore.isbn.isEmpty {
+                    codeView("ISBN:", code: viewStore.isbn)
+                }
+                if !viewStore.ean.isEmpty {
+                    codeView("EAN:", code: viewStore.ean)
+                }
+                if !viewStore.upc.isEmpty {
+                    codeView("UPC:", code: viewStore.upc)
+                }
+                if !viewStore.diamondCode.isEmpty {
+                    codeView("DIAMOND CODE:", code: viewStore.diamondCode)
+                }
+                EmptyView()
+                    .hidden()
+            }
+        }
+    }
+    
     func codeView(_ title: String, code: String) -> some View {
         HStack {
             Text(title)
@@ -198,7 +221,29 @@ public struct ComicsView: View {
         }
         .foregroundColor(Palette.white)
         .padding(.horizontal, 16.0)
-        .padding(.vertical, 2.0)
+        .padding(.vertical, 8.0)
+    }
+    
+    func linksView(_ links: PreviewLinksList) -> some View {
+        VStack(spacing: 2.0) {
+            subtitleView(links.name)
+            HStack {
+                ForEach(0..<links.links.count, id: \.self) { index in
+                    Link(links.types[index],
+                         destination: links.links[index])
+                    .foregroundColor(Palette.red)
+                    if index < links.links.count - 1 {
+                        Circle()
+                            .frame(width: 3.0)
+                            .foregroundColor(Palette.red)
+                            .offset(y: 2.0)
+                    }
+                }
+                Spacer()
+            }
+            .padding(.horizontal, 16.0)
+            .padding(.vertical, 8.0)
+        }
     }
 }
 

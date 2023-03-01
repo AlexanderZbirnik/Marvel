@@ -177,9 +177,9 @@ public struct PreviewSeriesList: Equatable, Identifiable {
     public var url = ""
     public var items: [Self.Item] = []
     
-    public init(_ comics: SeriesList) {
-        self.url = comics.collectionURI ?? ""
-        self.items = comics.items?.map({
+    public init(_ series: SeriesList) {
+        self.url = series.collectionURI ?? ""
+        self.items = series.items?.map({
             Item($0)
         }) ?? []
     }
@@ -247,6 +247,61 @@ public struct PreviewCharactersList: Equatable, Identifiable {
         public init(_ item: CharacterList.CharacterSummary) {
             self.name = item.name ?? ""
             self.url = item.resourceURI ?? ""
+        }
+    }
+}
+
+public struct PreviewCreatorsList: Equatable, Identifiable {
+    public var id: String {
+        self.url
+    }
+    public var name = "Creators"
+    public var url = ""
+    public var items: [Self.Item] = []
+    public var list: [Self.Role] = []
+    
+    public init(_ creators: CreatorList) {
+        self.url = creators.collectionURI ?? ""
+        self.items = creators.items?.map({
+            Item($0)
+        }) ?? []
+        self.list = Role.parseItems(self.items)
+    }
+    
+    public struct Role: Equatable, Hashable {
+        public var title = ""
+        public var names = ""
+        
+        public static func parseItems(_ items: [PreviewCreatorsList.Item]) -> [Role] {
+            var rolesDictionary: [String: [String]] = [:]
+            var roles: [Role] = []
+            for item in items {
+                if rolesDictionary[item.role]?.isEmpty ?? true {
+                    rolesDictionary[item.role] = []
+                }
+                rolesDictionary[item.role]?.append(item.name)
+            }
+            for key in rolesDictionary.keys {
+                if let names = rolesDictionary[key], !names.isEmpty {
+                    roles.append(Role(title: key.capitalized, names: names.joined(separator: ", ")))
+                }
+            }
+            return roles
+        }
+    }
+    
+    public struct Item: Equatable, Identifiable {
+        public var id: String {
+            self.url
+        }
+        public var name = ""
+        public var url = ""
+        public var role = ""
+        
+        public init(_ item: CreatorList.CreatorSummary) {
+            self.name = item.name ?? ""
+            self.url = item.resourceURI ?? ""
+            self.role = item.role ?? ""
         }
     }
 }

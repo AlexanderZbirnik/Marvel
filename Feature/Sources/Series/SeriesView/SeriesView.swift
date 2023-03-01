@@ -108,7 +108,7 @@ public struct SeriesView: View {
         }
     }
     
-    func creatorsView(_ creators: SeriesCreatorsList) -> some View {
+    func creatorsView(_ creators: PreviewCreatorsList) -> some View {
         VStack(spacing: .zero) {
             subtitleView(creators.name)
             ForEach(creators.list, id: \.self) { role in

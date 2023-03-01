@@ -17,8 +17,8 @@ public struct ComicsReducer: ReducerProtocol {
         var pageCount = 0
         var series: PreviewSeriesList?
         var characters: PreviewCharactersList?
-//        var creators: SeriesCreatorsList?
-//        var links: PreviewLinksList?
+        var creators: PreviewCreatorsList?
+        var links: PreviewLinksList?
         
         public init(_ comics: Comics) {
             self.id = comics.id
@@ -38,9 +38,12 @@ public struct ComicsReducer: ReducerProtocol {
             if let characters = comics.characters, !(characters.items ?? []).isEmpty {
                 self.characters = PreviewCharactersList(characters)
             }
-//            if !character.urls.isEmpty {
-//                self.links = PreviewLinksList(character.urls)
-//            }
+            if let creators = comics.creators, !(creators.items ?? []).isEmpty {
+                self.creators = PreviewCreatorsList(creators)
+            }
+            if let links = comics.urls, !links.isEmpty {
+                self.links = PreviewLinksList(links)
+            }
         }
     }
     

@@ -10,7 +10,7 @@ public struct SeriesReducer: ReducerProtocol {
         var detail = ""
         var imageUrl: URL
         var characters: PreviewCharactersList?
-        var creators: SeriesCreatorsList?
+        var creators: PreviewCreatorsList?
         var comics: PreviewComicsList?
         
         public init(_ series: Series) {
@@ -23,7 +23,7 @@ public struct SeriesReducer: ReducerProtocol {
                 self.characters = PreviewCharactersList(characters)
             }
             if let creators = series.creators, !(creators.items ?? []).isEmpty {
-                self.creators = SeriesCreatorsList(creators)
+                self.creators = PreviewCreatorsList(creators)
             }
             if let comics = series.comics, !(comics.items ?? []).isEmpty {
                 self.comics = PreviewComicsList(comics)

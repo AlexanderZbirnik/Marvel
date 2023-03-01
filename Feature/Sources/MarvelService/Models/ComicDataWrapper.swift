@@ -83,6 +83,8 @@ extension ComicsDataWrapper.ComicDataContainer.Comics {
             MUrl(type: "comiclink",
                  url: "http://marvel.com/comics/characters/1009368/iron_man?utm_campaign=apiRef&utm_source=a0e20b6e3044ac0bdea022dabdeddf1a")
         ]
+        comics.characters = .mock
+        comics.creators = .mock
         
         return comics
     }()
