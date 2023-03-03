@@ -19,6 +19,7 @@ public struct ComicsReducer: ReducerProtocol {
         var characters: PreviewCharactersList?
         var creators: PreviewCreatorsList?
         var links: PreviewLinksList?
+        var dates: [PreviewDate] = []
         
         public init(_ comics: Comics) {
             self.id = comics.id
@@ -43,6 +44,13 @@ public struct ComicsReducer: ReducerProtocol {
             }
             if let links = comics.urls, !links.isEmpty {
                 self.links = PreviewLinksList(links)
+            }
+            if let dates = comics.dates, !dates.isEmpty {
+                for date in dates {
+                    if let previewDate = PreviewDate.preview(date) {
+                        self.dates.append(previewDate)
+                    }
+                }
             }
         }
     }

@@ -85,6 +85,7 @@ extension ComicsDataWrapper.ComicDataContainer.Comics {
         ]
         comics.characters = .mock
         comics.creators = .mock
+        comics.dates = [.mockSale, .mockFoc]
         
         return comics
     }()

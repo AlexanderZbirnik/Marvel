@@ -29,6 +29,9 @@ public struct ComicsView: View {
                     if let series = viewStore.series {
                         seriesView(series)
                     }
+                    if !viewStore.dates.isEmpty {
+                       datesView
+                    }
                     formatPagesView
                     codesView
                     if let links = viewStore.links {
@@ -178,12 +181,12 @@ public struct ComicsView: View {
     
     var formatPagesView: some View {
         WithViewStore(self.store) { viewStore in
-            VStack {
+            VStack(spacing: 0.0) {
                 if !viewStore.format.isEmpty {
-                    codeView("Format:", code: viewStore.format)
+                    infoView("Format:", info: viewStore.format)
                 }
                 if viewStore.pageCount != 0 {
-                    codeView("Page count:", code: "\(viewStore.pageCount)")
+                    infoView("Page count:", info: "\(viewStore.pageCount)")
                 }
                 EmptyView()
                     .hidden()
@@ -195,16 +198,16 @@ public struct ComicsView: View {
         WithViewStore(self.store) { viewStore in
             VStack(spacing: .zero) {
                 if !viewStore.isbn.isEmpty {
-                    codeView("ISBN:", code: viewStore.isbn)
+                    infoView("ISBN:", info: viewStore.isbn)
                 }
                 if !viewStore.ean.isEmpty {
-                    codeView("EAN:", code: viewStore.ean)
+                    infoView("EAN:", info: viewStore.ean)
                 }
                 if !viewStore.upc.isEmpty {
-                    codeView("UPC:", code: viewStore.upc)
+                    infoView("UPC:", info: viewStore.upc)
                 }
                 if !viewStore.diamondCode.isEmpty {
-                    codeView("DIAMOND CODE:", code: viewStore.diamondCode)
+                    infoView("DIAMOND CODE:", info: viewStore.diamondCode)
                 }
                 EmptyView()
                     .hidden()
@@ -212,11 +215,11 @@ public struct ComicsView: View {
         }
     }
     
-    func codeView(_ title: String, code: String) -> some View {
+    func infoView(_ title: String, info: String) -> some View {
         HStack {
             Text(title)
                 .font(.headline)
-            Text(code)
+            Text(info)
             Spacer()
         }
         .foregroundColor(Palette.white)
@@ -243,6 +246,18 @@ public struct ComicsView: View {
             }
             .padding(.horizontal, 16.0)
             .padding(.vertical, 8.0)
+        }
+    }
+    
+    var datesView: some View {
+        WithViewStore(self.store) { viewStore in
+            VStack(spacing: .zero) {
+                ForEach(viewStore.dates) { date in
+                    infoView(date.title, info: date.date)
+                }
+                EmptyView()
+                    .hidden()
+            }
         }
     }
 }

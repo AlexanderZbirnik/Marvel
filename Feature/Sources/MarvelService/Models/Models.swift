@@ -133,177 +133,24 @@ public struct TextObject: Codable, Equatable {
 public struct ComicDate: Codable, Equatable {
     public var type: String?
     public var date: String?
+    
+    public init(type: String? = nil, date: String? = nil) {
+        self.type = type
+        self.date = date
+    }
+    
+    public static let mockSale: Self = {
+        ComicDate(type: "onsaleDate", date: "2023-03-29T00:00:00-0400")
+    }()
+    
+    public static let mockFoc: Self = {
+        ComicDate(type: "focDate", date: "2023-02-27T00:00:00-0500")
+    }()
 }
 
 public struct ComicPrice: Codable, Equatable {
     public var type: String?
     public var price: Float?
-}
-
-public struct PreviewComicsList: Equatable, Identifiable {
-    public var id: String {
-        self.url
-    }
-    public var name = "Comics"
-    public var url = ""
-    public var items: [Self.Item] = []
-    
-    public init(_ comics: ComicList) {
-        self.url = comics.collectionURI ?? ""
-        self.items = comics.items?.map({
-            Item($0)
-        }) ?? []
-    }
-    
-    public struct Item: Equatable, Identifiable, Hashable {
-        public var id: String {
-            self.url
-        }
-        public var name = ""
-        public var url = ""
-        
-        public init(_ item: ComicList.ComicSummary) {
-            self.name = item.name ?? ""
-            self.url = item.resourceURI ?? ""
-        }
-    }
-}
-
-public struct PreviewSeriesList: Equatable, Identifiable {
-    public var id: String {
-        self.url
-    }
-    public var name = "Series"
-    public var url = ""
-    public var items: [Self.Item] = []
-    
-    public init(_ series: SeriesList) {
-        self.url = series.collectionURI ?? ""
-        self.items = series.items?.map({
-            Item($0)
-        }) ?? []
-    }
-    
-    public struct Item: Equatable, Identifiable, Hashable {
-        public var id: String {
-            self.url
-        }
-        public var name = ""
-        public var url = ""
-        
-        public init(_ item: SeriesList.SeriesSummary) {
-            self.name = item.name ?? ""
-            self.url = item.resourceURI ?? ""
-        }
-    }
-}
-
-public struct PreviewLinksList: Equatable, Identifiable {
-    public var id: String {
-        self.name
-    }
-    public var name = "Links"
-    public var types: [String] = []
-    public var links: [URL] = []
-    
-    public init(_ urls: [MUrl]) {
-        for url in urls {
-            if let link = URL(string: url.url ?? "") {
-                types.append(url.type ?? "")
-                links.append(link)
-            }
-        }
-    }
-}
-
-public struct PreviewCharactersList: Equatable, Identifiable {
-    public var id: String {
-        self.url
-    }
-    public var name = "Characters"
-    public var url = ""
-    public var items: [Self.Item] = []
-    public var list: String {
-        let names = self.items.map {
-            $0.name
-        }
-        return names.joined(separator: ", ")
-    }
-    
-    public init(_ characters: CharacterList) {
-        self.url = characters.collectionURI ?? ""
-        self.items = characters.items?.map({
-            Item($0)
-        }) ?? []
-    }
-    
-    public struct Item: Equatable, Identifiable {
-        public var id: String {
-            self.url
-        }
-        var name = ""
-        var url = ""
-        
-        public init(_ item: CharacterList.CharacterSummary) {
-            self.name = item.name ?? ""
-            self.url = item.resourceURI ?? ""
-        }
-    }
-}
-
-public struct PreviewCreatorsList: Equatable, Identifiable {
-    public var id: String {
-        self.url
-    }
-    public var name = "Creators"
-    public var url = ""
-    public var items: [Self.Item] = []
-    public var list: [Self.Role] = []
-    
-    public init(_ creators: CreatorList) {
-        self.url = creators.collectionURI ?? ""
-        self.items = creators.items?.map({
-            Item($0)
-        }) ?? []
-        self.list = Role.parseItems(self.items)
-    }
-    
-    public struct Role: Equatable, Hashable {
-        public var title = ""
-        public var names = ""
-        
-        public static func parseItems(_ items: [PreviewCreatorsList.Item]) -> [Role] {
-            var rolesDictionary: [String: [String]] = [:]
-            var roles: [Role] = []
-            for item in items {
-                if rolesDictionary[item.role]?.isEmpty ?? true {
-                    rolesDictionary[item.role] = []
-                }
-                rolesDictionary[item.role]?.append(item.name)
-            }
-            for key in rolesDictionary.keys {
-                if let names = rolesDictionary[key], !names.isEmpty {
-                    roles.append(Role(title: key.capitalized, names: names.joined(separator: ", ")))
-                }
-            }
-            return roles
-        }
-    }
-    
-    public struct Item: Equatable, Identifiable {
-        public var id: String {
-            self.url
-        }
-        public var name = ""
-        public var url = ""
-        public var role = ""
-        
-        public init(_ item: CreatorList.CreatorSummary) {
-            self.name = item.name ?? ""
-            self.url = item.resourceURI ?? ""
-            self.role = item.role ?? ""
-        }
-    }
 }
 
 
