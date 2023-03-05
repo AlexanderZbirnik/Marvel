@@ -31,6 +31,12 @@ public struct ComicsItemReducer: ReducerProtocol {
             ComicsReducer()
         }
         Reduce { state, action in
+            switch action {
+            case .comics:
+                Haptic.feedback(.soft)
+            default:
+                break
+            }
             return .none
         }
     }

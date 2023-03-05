@@ -31,6 +31,12 @@ public struct CharacterItemReducer: ReducerProtocol {
             CharacterReducer()
         }
         Reduce { state, action in
+            switch action {
+            case .character:
+                Haptic.feedback(.soft)
+            default:
+                break
+            }
             return .none
         }
     }

@@ -51,7 +51,6 @@ public struct CharacterItemView: View {
                         EmptyView()
                     }
                     .opacity(.zero)
-
                 }
                 .onAppear {
                     viewStore.send(.onAppear)
