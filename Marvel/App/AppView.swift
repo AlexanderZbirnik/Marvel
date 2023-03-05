@@ -38,17 +38,17 @@ struct AppView: View {
                     }
                 )
             ) {
-                SeriesListView(
+                ComicsListView(
                     store: self.store.scope(
-                        state: \.series,
-                        action: AppReducer.Action.series
+                        state: \.comics,
+                        action: AppReducer.Action.comics
                     )
                 )
                 .tabItem {
-                    Label("Series", systemImage: "books.vertical")
+                    Label("Comics", systemImage: "magazine")
                 }
-                .tag(AppReducer.TabItem.series.rawValue)
-
+                .tag(AppReducer.TabItem.comics.rawValue)
+                
                 CharactersListView(
                     store: self.store.scope(
                         state: \.characters,
@@ -60,16 +60,16 @@ struct AppView: View {
                 }
                 .tag(AppReducer.TabItem.characters.rawValue)
                 
-                ComicsListView(
+                SeriesListView(
                     store: self.store.scope(
-                        state: \.comics,
-                        action: AppReducer.Action.comics
+                        state: \.series,
+                        action: AppReducer.Action.series
                     )
                 )
                 .tabItem {
-                    Label("Comics", systemImage: "magazine")
+                    Label("Series", systemImage: "books.vertical")
                 }
-                .tag(AppReducer.TabItem.comics.rawValue)
+                .tag(AppReducer.TabItem.series.rawValue)
             }
             .accentColor(Palette.red)
         }
