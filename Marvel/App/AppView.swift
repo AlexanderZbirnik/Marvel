@@ -18,9 +18,14 @@ struct AppView: View {
                 Palette.darkGray
                     .ignoresSafeArea()
                 tabsView
+                if viewStore.showLaunch {
+                    LaunchView()
+                        .ignoresSafeArea()
+                }
             }
             .onAppear {
                 viewStore.send(.onAppear)
+                viewStore.send(.onAppearLaunch)
             }
         }
     }

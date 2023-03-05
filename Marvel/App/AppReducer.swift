@@ -15,6 +15,7 @@ struct AppReducer: ReducerProtocol {
         var series = SeriesListReducer.State()
         var characters = CharactersListReducer.State()
         var comics = ComicsListReducer.State()
+        var showLaunch = true
         
         init() {
             let apiParameters = marvelApiParameters()
@@ -32,11 +33,15 @@ struct AppReducer: ReducerProtocol {
     
     enum Action: Equatable {
         case onAppear
+        case onAppearLaunch
+        case hideLaunch
         case series(SeriesListReducer.Action)
         case characters(CharactersListReducer.Action)
         case comics(ComicsListReducer.Action)
         case tabSelected(TabItem)
     }
+    
+    @Dependency(\.continuousClock) var clock
     
     var body: some ReducerProtocolOf<Self> {
         Scope(state: \.series, action: /Action.series) {
@@ -52,6 +57,13 @@ struct AppReducer: ReducerProtocol {
             switch action {
             case .onAppear, .characters, .series, .comics:
                 break
+            case .onAppearLaunch:
+                return .run { send in
+                    try await self.clock.sleep(for: .seconds(1.2))
+                    await send(.hideLaunch, animation: .linear)
+                }
+            case .hideLaunch:
+                state.showLaunch = false
             case let .tabSelected(tab):
                 Haptic.feedback(.selectionChanged)
                 state.tab = tab
