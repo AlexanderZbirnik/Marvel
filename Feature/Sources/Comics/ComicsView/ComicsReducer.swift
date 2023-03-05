@@ -20,6 +20,7 @@ public struct ComicsReducer: ReducerProtocol {
         var creators: PreviewCreatorsList?
         var links: PreviewLinksList?
         var dates: [PreviewDate] = []
+        var prices: [PreviewPrice] = []
         
         public init(_ comics: Comics) {
             self.id = comics.id
@@ -49,6 +50,13 @@ public struct ComicsReducer: ReducerProtocol {
                 for date in dates {
                     if let previewDate = PreviewDate.preview(date) {
                         self.dates.append(previewDate)
+                    }
+                }
+            }
+            if let prices = comics.prices, !prices.isEmpty {
+                for price in prices {
+                    if let previewPrice = PreviewPrice.preview(price) {
+                        self.prices.append(previewPrice)
                     }
                 }
             }

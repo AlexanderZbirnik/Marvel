@@ -86,6 +86,9 @@ extension ComicsDataWrapper.ComicDataContainer.Comics {
         comics.characters = .mock
         comics.creators = .mock
         comics.dates = [.mockSale, .mockFoc]
+        comics.prices = [
+            ComicPrice(type: "printPrice", price: 3.99)
+        ]
         
         return comics
     }()

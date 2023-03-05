@@ -29,9 +29,7 @@ public struct ComicsView: View {
                     if let series = viewStore.series {
                         seriesView(series)
                     }
-                    if !viewStore.dates.isEmpty {
-                       datesView
-                    }
+                    dateAndPricesView
                     formatPagesView
                     codesView
                     if let links = viewStore.links {
@@ -181,7 +179,7 @@ public struct ComicsView: View {
     
     var formatPagesView: some View {
         WithViewStore(self.store) { viewStore in
-            VStack(spacing: 0.0) {
+            VStack(spacing: .zero) {
                 if !viewStore.format.isEmpty {
                     infoView("Format:", info: viewStore.format)
                 }
@@ -249,14 +247,33 @@ public struct ComicsView: View {
         }
     }
     
-    var datesView: some View {
+    var dateAndPricesView : some View {
         WithViewStore(self.store) { viewStore in
             VStack(spacing: .zero) {
-                ForEach(viewStore.dates) { date in
-                    infoView(date.title, info: date.date)
+                if !viewStore.dates.isEmpty {
+                    datesView(viewStore.dates)
+                }
+                if !viewStore.prices.isEmpty {
+                    pricesView(viewStore.prices)
                 }
                 EmptyView()
                     .hidden()
+            }
+        }
+    }
+    
+    func datesView(_ dates: [PreviewDate]) -> some View {
+        VStack(spacing: .zero) {
+            ForEach(dates) { date in
+                infoView(date.title, info: date.date)
+            }
+        }
+    }
+    
+    func pricesView(_ prices: [PreviewPrice]) -> some View {
+        VStack(spacing: .zero) {
+            ForEach(prices) { price in
+                infoView(price.title, info: price.price)
             }
         }
     }

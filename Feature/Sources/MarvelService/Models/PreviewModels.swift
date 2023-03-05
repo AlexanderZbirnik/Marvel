@@ -203,3 +203,29 @@ public struct PreviewDate: Equatable, Identifiable {
     }
 }
 
+public struct PreviewPrice: Equatable, Identifiable {
+    public var id: String {
+        self.title
+    }
+    public var title = ""
+    public var price = ""
+    
+    public init(type: String, price: String) {
+        if type == "printPrice" {
+            self.title = "Print price: "
+        } else {
+            self.title = type
+        }
+        self.price = price + "$"
+    }
+    
+    public static func preview(_ comicPrice: ComicPrice) -> PreviewPrice? {
+        guard let type = comicPrice.type, !type.isEmpty else {
+            return nil
+        }
+        guard let price = comicPrice.price, price > .zero else {
+            return nil
+        }
+        return .init(type: type, price: "\(price)")
+    }
+}
