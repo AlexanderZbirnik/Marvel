@@ -91,7 +91,7 @@
 		6B80DF0329804C15003BD961 /* Marvel */ = {
 			isa = PBXGroup;
 			children = (
-				6B211B3129B4D22000A44CB7 /* Info.plist */,
+				6B80DF0429804C15003BD961 /* MarvelApp.swift */,
 				6B1388F0298301C900960F52 /* App */,
 				6B8A72102981A5A2004DF8B1 /* Support Files */,
 				6B80DF0A29804C16003BD961 /* Preview Content */,
@@ -110,7 +110,7 @@
 		6B8A72102981A5A2004DF8B1 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				6B80DF0429804C15003BD961 /* MarvelApp.swift */,
+				6B211B3129B4D22000A44CB7 /* Info.plist */,
 				6B80DF0829804C16003BD961 /* Assets.xcassets */,
 				6B8A720E2981A533004DF8B1 /* Marvel-Info.plist */,
 				6B8996DA29B4D67A005FEB9F /* Launch Screen.storyboard */,

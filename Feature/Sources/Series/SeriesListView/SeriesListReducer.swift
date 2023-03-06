@@ -2,10 +2,11 @@ import Foundation
 import ComposableArchitecture
 import MarvelService
 import Common
+import Tagged
 
 public struct SeriesListReducer: ReducerProtocol {
     public struct State: Equatable, Identifiable {
-        public var id = "series_list_id"
+        public var id: Tagged<Self, String> = .init("series_list_id")
         public var apiParameters: [String: String] = [:]
         var firstOnAppear = true
         var seriesItems: IdentifiedArrayOf<SeriesItemReducer.State> = []

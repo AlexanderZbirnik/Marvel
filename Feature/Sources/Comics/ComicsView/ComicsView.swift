@@ -51,7 +51,7 @@ public struct ComicsView: View {
                 image
                     .resizable()
             } placeholder: {
-                Image(systemName: "photo")
+                Image.bigRectPlaceholder
                     .resizable()
             }
             .aspectRatio(

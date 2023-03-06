@@ -45,7 +45,7 @@ public struct CharacterView: View {
                 image
                     .resizable()
             } placeholder: {
-                Image(systemName: "photo")
+                Image.bigRectPlaceholder
                     .resizable()
             }
             .aspectRatio(

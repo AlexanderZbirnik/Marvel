@@ -6,11 +6,11 @@ import Characters
 import Comics
 import CryptoKit
 import MarvelService
-
+import Tagged
 
 struct AppReducer: ReducerProtocol {
     struct State: Equatable, Identifiable {
-        let id = "app_id"
+        let id: Tagged<Self, String> = .init("app_id")
         var tab: TabItem = .comics
         var series = SeriesListReducer.State()
         var characters = CharactersListReducer.State()

@@ -24,7 +24,7 @@ public struct CharacterItemView: View {
                                         .resizable()
                                         .aspectRatio(contentMode: .fill)
                                 } placeholder: {
-                                    Image(systemName: "photo")
+                                    Image.squarePlaceholder
                                         .resizable()
                                         .aspectRatio(contentMode: .fill)
                                         .foregroundColor(Palette.gray)

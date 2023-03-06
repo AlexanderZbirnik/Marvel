@@ -24,7 +24,7 @@ public struct ComicsItemView: View {
                                         .resizable()
                                         .aspectRatio(contentMode: .fill)
                                 } placeholder: {
-                                    Image(systemName: "photo")
+                                    Image.smallRectPlaceholder
                                         .resizable()
                                         .aspectRatio(contentMode: .fill)
                                         .foregroundColor(Palette.gray)

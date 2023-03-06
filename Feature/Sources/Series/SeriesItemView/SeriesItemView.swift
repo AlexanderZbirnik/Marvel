@@ -24,7 +24,7 @@ public struct SeriesItemView: View {
                                         .resizable()
                                         .aspectRatio(contentMode: .fill)
                                 } placeholder: {
-                                    Image(systemName: "photo")
+                                    Image.squarePlaceholder
                                         .resizable()
                                         .aspectRatio(contentMode: .fill)
                                         .foregroundColor(Palette.gray)
@@ -51,7 +51,6 @@ public struct SeriesItemView: View {
                         EmptyView()
                     }
                     .opacity(.zero)
-
                 }
                 .onAppear {
                     viewStore.send(.onAppear)
