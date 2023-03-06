@@ -75,16 +75,10 @@ struct AppReducer: ReducerProtocol {
 
 extension AppReducer.State {
     private func marvelApiParameters() -> [String: String] {
-        guard let filePath = Bundle.main.path(forResource: "Marvel-Info", ofType: "plist") else {
-            return [:]
-        }
-        let plist = NSDictionary(contentsOfFile: filePath)
-        guard let publicKey = plist?.object(forKey: "public_key") as? String else {
-            return [:]
-        }
-        guard let privateKey = plist?.object(forKey: "private_key") as? String else {
-            return [:]
-        }
+        // Register on https://developer.marvel.com and set your public and provate keys
+        let publicKey = "marvel_public_key"
+        let privateKey = "marvel_private_key"
+        
         let ts = String(Int(Date().timeIntervalSince1970 * 1000.0))
         let totalString = ts + privateKey + publicKey
         guard let data = totalString.data(using: .utf8) else {

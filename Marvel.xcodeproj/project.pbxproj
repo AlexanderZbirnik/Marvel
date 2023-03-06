@@ -16,7 +16,6 @@
 		6B80DF0C29804C16003BD961 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6B80DF0B29804C16003BD961 /* Preview Assets.xcassets */; };
 		6B8996DB29B4D67A005FEB9F /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B8996DA29B4D67A005FEB9F /* Launch Screen.storyboard */; };
 		6B8996DD29B4D97F005FEB9F /* LaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8996DC29B4D97F005FEB9F /* LaunchView.swift */; };
-		6B8A720F2981A533004DF8B1 /* Marvel-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6B8A720E2981A533004DF8B1 /* Marvel-Info.plist */; };
 		6BBBC8FB2984640F00533A84 /* Characters in Frameworks */ = {isa = PBXBuildFile; productRef = 6BBBC8FA2984640F00533A84 /* Characters */; };
 		6BBBC8FD2984643A00533A84 /* Common in Frameworks */ = {isa = PBXBuildFile; productRef = 6BBBC8FC2984643A00533A84 /* Common */; };
 		6BBBC9012984643A00533A84 /* Series in Frameworks */ = {isa = PBXBuildFile; productRef = 6BBBC9002984643A00533A84 /* Series */; };
@@ -34,7 +33,6 @@
 		6B80DF0B29804C16003BD961 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		6B8996DA29B4D67A005FEB9F /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		6B8996DC29B4D97F005FEB9F /* LaunchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchView.swift; sourceTree = "<group>"; };
-		6B8A720E2981A533004DF8B1 /* Marvel-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Marvel-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,7 +110,6 @@
 			children = (
 				6B211B3129B4D22000A44CB7 /* Info.plist */,
 				6B80DF0829804C16003BD961 /* Assets.xcassets */,
-				6B8A720E2981A533004DF8B1 /* Marvel-Info.plist */,
 				6B8996DA29B4D67A005FEB9F /* Launch Screen.storyboard */,
 				6B8996DC29B4D97F005FEB9F /* LaunchView.swift */,
 			);
@@ -193,7 +190,6 @@
 				6B80DF0C29804C16003BD961 /* Preview Assets.xcassets in Resources */,
 				6B80DF0929804C16003BD961 /* Assets.xcassets in Resources */,
 				6B8996DB29B4D67A005FEB9F /* Launch Screen.storyboard in Resources */,
-				6B8A720F2981A533004DF8B1 /* Marvel-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
