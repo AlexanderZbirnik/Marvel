@@ -75,7 +75,7 @@ struct AppReducer: ReducerProtocol {
 
 extension AppReducer.State {
     private func marvelApiParameters() -> [String: String] {
-        // Register on https://developer.marvel.com and set your public and provate keys
+        // Register on https://developer.marvel.com and set your public and private keys
         let publicKey = "marvel_public_key"
         let privateKey = "marvel_private_key"
         
