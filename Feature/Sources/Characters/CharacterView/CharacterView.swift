@@ -61,14 +61,7 @@ public struct CharacterView: View {
     
     var detailView: some View {
         WithViewStore(self.store) { viewStore in
-            HStack {
-                Text(viewStore.detail)
-                    .font(.body)
-                    .foregroundColor(Palette.white)
-                    .padding(.horizontal, 16.0)
-                    .padding(.top, 24.0)
-                Spacer()
-            }
+            DetailView(detail: viewStore.detail)
         }
     }
     
