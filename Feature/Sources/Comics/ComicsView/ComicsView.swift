@@ -18,7 +18,7 @@ public struct ComicsView: View {
                 ScrollView(.vertical) {
                     imageView
                     if !viewStore.detail.isEmpty {
-                        detailView
+                        DetailView(detail: viewStore.detail)
                     }
                     if let characters = viewStore.characters {
                         charactersView(characters)
@@ -64,15 +64,9 @@ public struct ComicsView: View {
         }
     }
     
-    var detailView: some View {
-        WithViewStore(self.store) { viewStore in
-            DetailView(detail: viewStore.detail)
-        }
-    }
-    
     func comicsView(_ comics: PreviewComicsList) -> some View {
         VStack(spacing: 2.0) {
-            subtitleView(comics.name)
+            SubtitleView(subtitle: comics.name)
             ForEach(0..<comics.items.count, id: \.self) { index in
                 HStack {
                     Text(comics.items[index].name)
@@ -96,7 +90,7 @@ public struct ComicsView: View {
     
     func seriesView(_ series: PreviewSeriesList) -> some View {
         VStack(spacing: 2.0) {
-            subtitleView(series.name)
+            SubtitleView(subtitle: series.name)
             ForEach(0..<series.items.count, id: \.self) { index in
                 HStack {
                     Text(series.items[index].name)
@@ -120,7 +114,7 @@ public struct ComicsView: View {
     
     func charactersView(_ characters: PreviewCharactersList) -> some View {
         VStack(spacing: .zero) {
-            subtitleView(characters.name)
+            SubtitleView(subtitle: characters.name)
             HStack {
                 Text(characters.list)
                     .font(.headline)
@@ -136,7 +130,7 @@ public struct ComicsView: View {
     
     func creatorsView(_ creators: PreviewCreatorsList) -> some View {
         VStack(spacing: .zero) {
-            subtitleView(creators.name)
+            SubtitleView(subtitle: creators.name)
             ForEach(creators.list, id: \.self) { role in
                 HStack {
                     Text(role.title + ":")
@@ -158,18 +152,6 @@ public struct ComicsView: View {
                     Spacer()
                 }
             }
-        }
-    }
-    
-    func subtitleView(_ text: String) -> some View {
-        HStack {
-            Text(text)
-                .font(.title2)
-                .fontWeight(.medium)
-                .foregroundColor(Palette.gray)
-                .padding(.horizontal, 16.0)
-                .padding(.top, 4.0)
-            Spacer()
         }
     }
     
@@ -223,7 +205,7 @@ public struct ComicsView: View {
     
     func linksView(_ links: PreviewLinksList) -> some View {
         VStack(spacing: 2.0) {
-            subtitleView(links.name)
+            SubtitleView(subtitle: links.name)
             HStack {
                 ForEach(0..<links.links.count, id: \.self) { index in
                     Link(links.types[index],

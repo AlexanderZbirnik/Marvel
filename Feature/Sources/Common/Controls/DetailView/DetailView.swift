@@ -23,7 +23,7 @@ public struct DetailView_Previews: PreviewProvider {
     public static var previews: some View {
         ZStack {
             Color.gray
-            DetailView(detail: "Any detsail text...")
+            DetailView(detail: "Any detail text...")
         }
     }
 }
