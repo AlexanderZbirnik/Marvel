@@ -26,9 +26,6 @@ public struct ComicsView: View {
                     if let creators = viewStore.creators {
                         creatorsView(creators)
                     }
-                    if let series = viewStore.series {
-                        seriesView(series)
-                    }
                     dateAndPricesView
                     formatPagesView
                     codesView
@@ -61,54 +58,6 @@ public struct ComicsView: View {
             .shadow(color: Palette.red, radius: 8.0)
             .padding(.horizontal, 64.0)
             .padding(.vertical, 16.0)
-        }
-    }
-    
-    func comicsView(_ comics: PreviewComicsList) -> some View {
-        VStack(spacing: 2.0) {
-            SubtitleView(subtitle: comics.name)
-            ForEach(0..<comics.items.count, id: \.self) { index in
-                HStack {
-                    Text(comics.items[index].name)
-                        .font(.headline)
-                        .fontWeight(.regular)
-                        .foregroundColor(Palette.white)
-                        .padding(.horizontal, 16.0)
-                        .padding(.top, 8.0)
-                    Spacer()
-                }
-                if index < comics.items.count {
-                    Rectangle()
-                        .frame(height: 1.0)
-                        .foregroundColor(Palette.lightGray)
-                        .padding(.horizontal, 32.0)
-                        .padding(.top, 4.0)
-                }
-            }
-        }
-    }
-    
-    func seriesView(_ series: PreviewSeriesList) -> some View {
-        VStack(spacing: 2.0) {
-            SubtitleView(subtitle: series.name)
-            ForEach(0..<series.items.count, id: \.self) { index in
-                HStack {
-                    Text(series.items[index].name)
-                        .font(.headline)
-                        .fontWeight(.regular)
-                        .foregroundColor(Palette.white)
-                        .padding(.horizontal, 16.0)
-                        .padding(.top, 8.0)
-                    Spacer()
-                }
-                if index < series.items.count - 1 {
-                    Rectangle()
-                        .frame(height: 1.0)
-                        .foregroundColor(Palette.lightGray)
-                        .padding(.horizontal, 32.0)
-                        .padding(.top, 4.0)
-                }
-            }
         }
     }
     
