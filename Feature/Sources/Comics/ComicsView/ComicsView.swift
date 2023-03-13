@@ -21,7 +21,8 @@ public struct ComicsView: View {
                         DetailView(detail: viewStore.detail)
                     }
                     if let characters = viewStore.characters {
-                        charactersView(characters)
+                        CharactersPreView(title: characters.name,
+                                          characters: characters.list)
                     }
                     if let creators = viewStore.creators {
                         creatorsView(creators)
@@ -30,7 +31,7 @@ public struct ComicsView: View {
                     formatPagesView
                     codesView
                     if let links = viewStore.links {
-                        linksView(links)
+                        LinksView(links: links)
                     }
                     Spacer()
                 }
@@ -58,22 +59,6 @@ public struct ComicsView: View {
             .shadow(color: Palette.red, radius: 8.0)
             .padding(.horizontal, 64.0)
             .padding(.vertical, 16.0)
-        }
-    }
-    
-    func charactersView(_ characters: PreviewCharactersList) -> some View {
-        VStack(spacing: .zero) {
-            SubtitleView(subtitle: characters.name)
-            HStack {
-                Text(characters.list)
-                    .font(.headline)
-                    .fontWeight(.regular)
-                    .italic()
-                    .foregroundColor(Palette.white)
-                    .padding(.horizontal, 16.0)
-                    .padding(.top, 4.0)
-                Spacer()
-            }
         }
     }
     
@@ -150,28 +135,6 @@ public struct ComicsView: View {
         .foregroundColor(Palette.white)
         .padding(.horizontal, 16.0)
         .padding(.vertical, 8.0)
-    }
-    
-    func linksView(_ links: PreviewLinksList) -> some View {
-        VStack(spacing: 2.0) {
-            SubtitleView(subtitle: links.name)
-            HStack {
-                ForEach(0..<links.links.count, id: \.self) { index in
-                    Link(links.types[index],
-                         destination: links.links[index])
-                    .foregroundColor(Palette.red)
-                    if index < links.links.count - 1 {
-                        Circle()
-                            .frame(width: 3.0)
-                            .foregroundColor(Palette.red)
-                            .offset(y: 2.0)
-                    }
-                }
-                Spacer()
-            }
-            .padding(.horizontal, 16.0)
-            .padding(.vertical, 8.0)
-        }
     }
     
     var dateAndPricesView : some View {

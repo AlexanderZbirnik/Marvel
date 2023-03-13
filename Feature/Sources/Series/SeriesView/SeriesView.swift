@@ -24,7 +24,8 @@ public struct SeriesView: View {
                         comicsView(comics)
                     }
                     if let characters = viewStore.characters {
-                        charactersView(characters)
+                        CharactersPreView(title: characters.name,
+                                          characters: characters.list)
                     }
                     if let creators = viewStore.creators {
                         creatorsView(creators)
@@ -78,22 +79,6 @@ public struct SeriesView: View {
                         .padding(.horizontal, 32.0)
                         .padding(.top, 4.0)
                 }
-            }
-        }
-    }
-    
-    func charactersView(_ characters: PreviewCharactersList) -> some View {
-        VStack(spacing: .zero) {
-            SubtitleView(subtitle: characters.name)
-            HStack {
-                Text(characters.list)
-                    .font(.headline)
-                    .fontWeight(.regular)
-                    .italic()
-                    .foregroundColor(Palette.white)
-                    .padding(.horizontal, 16.0)
-                    .padding(.top, 4.0)
-                Spacer()
             }
         }
     }
