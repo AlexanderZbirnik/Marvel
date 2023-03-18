@@ -22,7 +22,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     }
 }
 
-
 @main
 struct MarvelApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate

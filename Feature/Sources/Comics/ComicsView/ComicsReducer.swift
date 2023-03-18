@@ -15,7 +15,6 @@ public struct ComicsReducer: ReducerProtocol {
         var diamondCode = ""
         var format = ""
         var pageCount = 0
-        var series: PreviewSeriesList?
         var characters: PreviewCharactersList?
         var creators: PreviewCreatorsList?
         var links: PreviewLinksList?
@@ -34,9 +33,6 @@ public struct ComicsReducer: ReducerProtocol {
             self.diamondCode = comics.diamondCode ?? ""
             self.format = comics.format ?? ""
             self.pageCount = comics.pageCount ?? 0
-            if let series = comics.series, !(series.items ?? []).isEmpty {
-                self.series = PreviewSeriesList(series)
-            }
             if let characters = comics.characters, !(characters.items ?? []).isEmpty {
                 self.characters = PreviewCharactersList(characters)
             }

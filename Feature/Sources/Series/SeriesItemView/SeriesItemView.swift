@@ -52,6 +52,7 @@ public struct SeriesItemView: View {
                     }
                     .opacity(.zero)
                 }
+                .background(Palette.darkGray)
                 .onAppear {
                     viewStore.send(.onAppear)
                 }

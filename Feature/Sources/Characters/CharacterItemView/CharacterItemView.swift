@@ -52,6 +52,7 @@ public struct CharacterItemView: View {
                     }
                     .opacity(.zero)
                 }
+                .background(Palette.darkGray)
                 .onAppear {
                     viewStore.send(.onAppear)
                 }

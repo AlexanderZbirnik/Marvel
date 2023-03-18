@@ -1,4 +1,5 @@
 import Foundation
+import Common
 
 public struct PreviewComicsList: Equatable, Identifiable {
     public var id: String {
@@ -58,7 +59,7 @@ public struct PreviewSeriesList: Equatable, Identifiable {
     }
 }
 
-public struct PreviewLinksList: Equatable, Identifiable {
+public struct PreviewLinksList: Equatable, Identifiable, LinksViewProtocol {
     public var id: String {
         self.name
     }

@@ -18,22 +18,20 @@ public struct ComicsView: View {
                 ScrollView(.vertical) {
                     imageView
                     if !viewStore.detail.isEmpty {
-                        detailView
+                        DetailView(detail: viewStore.detail)
                     }
                     if let characters = viewStore.characters {
-                        charactersView(characters)
+                        CharactersPreView(title: characters.name,
+                                          characters: characters.list)
                     }
                     if let creators = viewStore.creators {
                         creatorsView(creators)
-                    }
-                    if let series = viewStore.series {
-                        seriesView(series)
                     }
                     dateAndPricesView
                     formatPagesView
                     codesView
                     if let links = viewStore.links {
-                        linksView(links)
+                        LinksView(links: links)
                     }
                     Spacer()
                 }
@@ -64,83 +62,9 @@ public struct ComicsView: View {
         }
     }
     
-    var detailView: some View {
-        WithViewStore(self.store) { viewStore in
-            Text(viewStore.detail)
-                .font(.body)
-                .foregroundColor(Palette.white)
-                .padding(.horizontal, 16.0)
-                .padding(.top, 24.0)
-        }
-    }
-    
-    func comicsView(_ comics: PreviewComicsList) -> some View {
-        VStack(spacing: 2.0) {
-            subtitleView(comics.name)
-            ForEach(0..<comics.items.count, id: \.self) { index in
-                HStack {
-                    Text(comics.items[index].name)
-                        .font(.headline)
-                        .fontWeight(.regular)
-                        .foregroundColor(Palette.white)
-                        .padding(.horizontal, 16.0)
-                        .padding(.top, 8.0)
-                    Spacer()
-                }
-                if index < comics.items.count {
-                    Rectangle()
-                        .frame(height: 1.0)
-                        .foregroundColor(Palette.lightGray)
-                        .padding(.horizontal, 32.0)
-                        .padding(.top, 4.0)
-                }
-            }
-        }
-    }
-    
-    func seriesView(_ series: PreviewSeriesList) -> some View {
-        VStack(spacing: 2.0) {
-            subtitleView(series.name)
-            ForEach(0..<series.items.count, id: \.self) { index in
-                HStack {
-                    Text(series.items[index].name)
-                        .font(.headline)
-                        .fontWeight(.regular)
-                        .foregroundColor(Palette.white)
-                        .padding(.horizontal, 16.0)
-                        .padding(.top, 8.0)
-                    Spacer()
-                }
-                if index < series.items.count - 1 {
-                    Rectangle()
-                        .frame(height: 1.0)
-                        .foregroundColor(Palette.lightGray)
-                        .padding(.horizontal, 32.0)
-                        .padding(.top, 4.0)
-                }
-            }
-        }
-    }
-    
-    func charactersView(_ characters: PreviewCharactersList) -> some View {
-        VStack(spacing: .zero) {
-            subtitleView(characters.name)
-            HStack {
-                Text(characters.list)
-                    .font(.headline)
-                    .fontWeight(.regular)
-                    .italic()
-                    .foregroundColor(Palette.white)
-                    .padding(.horizontal, 16.0)
-                    .padding(.top, 4.0)
-                Spacer()
-            }
-        }
-    }
-    
     func creatorsView(_ creators: PreviewCreatorsList) -> some View {
         VStack(spacing: .zero) {
-            subtitleView(creators.name)
+            SubtitleView(subtitle: creators.name)
             ForEach(creators.list, id: \.self) { role in
                 HStack {
                     Text(role.title + ":")
@@ -162,18 +86,6 @@ public struct ComicsView: View {
                     Spacer()
                 }
             }
-        }
-    }
-    
-    func subtitleView(_ text: String) -> some View {
-        HStack {
-            Text(text)
-                .font(.title2)
-                .fontWeight(.medium)
-                .foregroundColor(Palette.gray)
-                .padding(.horizontal, 16.0)
-                .padding(.top, 4.0)
-            Spacer()
         }
     }
     
@@ -223,28 +135,6 @@ public struct ComicsView: View {
         .foregroundColor(Palette.white)
         .padding(.horizontal, 16.0)
         .padding(.vertical, 8.0)
-    }
-    
-    func linksView(_ links: PreviewLinksList) -> some View {
-        VStack(spacing: 2.0) {
-            subtitleView(links.name)
-            HStack {
-                ForEach(0..<links.links.count, id: \.self) { index in
-                    Link(links.types[index],
-                         destination: links.links[index])
-                    .foregroundColor(Palette.red)
-                    if index < links.links.count - 1 {
-                        Circle()
-                            .frame(width: 3.0)
-                            .foregroundColor(Palette.red)
-                            .offset(y: 2.0)
-                    }
-                }
-                Spacer()
-            }
-            .padding(.horizontal, 16.0)
-            .padding(.vertical, 8.0)
-        }
     }
     
     var dateAndPricesView : some View {

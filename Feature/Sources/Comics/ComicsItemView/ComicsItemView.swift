@@ -55,6 +55,7 @@ public struct ComicsItemView: View {
                     }
                     .opacity(.zero)
                 }
+                .background(Palette.darkGray)
                 .onAppear {
                     viewStore.send(.onAppear)
                 }
