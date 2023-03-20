@@ -3,6 +3,42 @@ import ComposableArchitecture
 import Common
 import MarvelService
 
+extension ComicsView {
+    struct ViewState: Equatable {
+        let title: String
+        let imageUrl: URL
+        let detail: String
+        let characters: PreviewCharactersList?
+        let creators: PreviewCreatorsList?
+        let links: PreviewLinksList?
+        let format: String
+        let pageCount: Int
+        let isbn: String
+        let ean: String
+        let upc: String
+        let diamondCode: String
+        let dates: [PreviewDate]
+        let prices: [PreviewPrice]
+        
+        init(state: ComicsReducer.State) {
+            self.title = state.title
+            self.imageUrl = state.imageUrl
+            self.detail = state.detail
+            self.characters = state.characters
+            self.creators = state.creators
+            self.links = state.links
+            self.format = state.format
+            self.pageCount = state.pageCount
+            self.isbn = state.isbn
+            self.ean = state.ean
+            self.upc = state.upc
+            self.diamondCode = state.diamondCode
+            self.dates = state.dates
+            self.prices = state.prices
+        }
+    }
+}
+
 public struct ComicsView: View {
     var store: StoreOf<ComicsReducer>
     
@@ -11,12 +47,12 @@ public struct ComicsView: View {
     }
     
     public var body: some View {
-        WithViewStore(self.store) { viewStore in
+        WithViewStore(self.store, observe: ViewState.init) { viewStore in
             ZStack {
                 Palette.darkGray
                     .ignoresSafeArea()
                 ScrollView(.vertical) {
-                    imageView
+                    imageView(viewStore.imageUrl)
                     if !viewStore.detail.isEmpty {
                         DetailView(detail: viewStore.detail)
                     }
@@ -27,9 +63,12 @@ public struct ComicsView: View {
                     if let creators = viewStore.creators {
                         creatorsView(creators)
                     }
-                    dateAndPricesView
-                    formatPagesView
-                    codesView
+                    dateAndPricesView(dates: viewStore.dates, prices: viewStore.prices)
+                    formatPagesView(viewStore.format, pageCount: viewStore.pageCount)
+                    codesView(isbn: viewStore.isbn,
+                              ean: viewStore.ean,
+                              upc: viewStore.upc,
+                              diamondCode: viewStore.diamondCode)
                     if let links = viewStore.links {
                         LinksView(links: links)
                     }
@@ -43,23 +82,21 @@ public struct ComicsView: View {
         }
     }
     
-    var imageView: some View {
-        WithViewStore(self.store) { viewStore in
-            AsyncImage(url: viewStore.imageUrl) { image in
-                image
-                    .resizable()
-            } placeholder: {
-                Image.bigRectPlaceholder
-                    .resizable()
-            }
-            .aspectRatio(
-                CGSize(width: 300.0,height: 450.0),
-                contentMode: .fit)
-            .cornerRadius(8.0)
-            .shadow(color: Palette.red, radius: 8.0)
-            .padding(.horizontal, 64.0)
-            .padding(.vertical, 16.0)
+    func imageView(_ url: URL) -> some View {
+        AsyncImage(url: url) { image in
+            image
+                .resizable()
+        } placeholder: {
+            Image.bigRectPlaceholder
+                .resizable()
         }
+        .aspectRatio(
+            CGSize(width: 300.0,height: 450.0),
+            contentMode: .fit)
+        .cornerRadius(8.0)
+        .shadow(color: Palette.red, radius: 8.0)
+        .padding(.horizontal, 64.0)
+        .padding(.vertical, 16.0)
     }
     
     func creatorsView(_ creators: PreviewCreatorsList) -> some View {
@@ -89,39 +126,35 @@ public struct ComicsView: View {
         }
     }
     
-    var formatPagesView: some View {
-        WithViewStore(self.store) { viewStore in
-            VStack(spacing: .zero) {
-                if !viewStore.format.isEmpty {
-                    infoView("Format:", info: viewStore.format)
-                }
-                if viewStore.pageCount != 0 {
-                    infoView("Page count:", info: "\(viewStore.pageCount)")
-                }
-                EmptyView()
-                    .hidden()
+    func formatPagesView(_ format: String, pageCount: Int) -> some View {
+        VStack(spacing: .zero) {
+            if !format.isEmpty {
+                infoView("Format:", info: format)
             }
+            if pageCount != 0 {
+                infoView("Page count:", info: "\(pageCount)")
+            }
+            EmptyView()
+                .hidden()
         }
     }
     
-    var codesView: some View {
-        WithViewStore(self.store) { viewStore in
-            VStack(spacing: .zero) {
-                if !viewStore.isbn.isEmpty {
-                    infoView("ISBN:", info: viewStore.isbn)
-                }
-                if !viewStore.ean.isEmpty {
-                    infoView("EAN:", info: viewStore.ean)
-                }
-                if !viewStore.upc.isEmpty {
-                    infoView("UPC:", info: viewStore.upc)
-                }
-                if !viewStore.diamondCode.isEmpty {
-                    infoView("DIAMOND CODE:", info: viewStore.diamondCode)
-                }
-                EmptyView()
-                    .hidden()
+    func codesView(isbn: String, ean: String, upc: String, diamondCode: String) -> some View {
+        VStack(spacing: .zero) {
+            if !isbn.isEmpty {
+                infoView("ISBN:", info: isbn)
             }
+            if !ean.isEmpty {
+                infoView("EAN:", info: ean)
+            }
+            if !upc.isEmpty {
+                infoView("UPC:", info: upc)
+            }
+            if !diamondCode.isEmpty {
+                infoView("DIAMOND CODE:", info: diamondCode)
+            }
+            EmptyView()
+                .hidden()
         }
     }
     
@@ -137,18 +170,16 @@ public struct ComicsView: View {
         .padding(.vertical, 8.0)
     }
     
-    var dateAndPricesView : some View {
-        WithViewStore(self.store) { viewStore in
-            VStack(spacing: .zero) {
-                if !viewStore.dates.isEmpty {
-                    datesView(viewStore.dates)
-                }
-                if !viewStore.prices.isEmpty {
-                    pricesView(viewStore.prices)
-                }
-                EmptyView()
-                    .hidden()
+    func dateAndPricesView(dates: [PreviewDate], prices: [PreviewPrice]) -> some View {
+        VStack(spacing: .zero) {
+            if !dates.isEmpty {
+                datesView(dates)
             }
+            if !prices.isEmpty {
+                pricesView(prices)
+            }
+            EmptyView()
+                .hidden()
         }
     }
     
