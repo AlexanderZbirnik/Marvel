@@ -8,7 +8,7 @@ import CryptoKit
 import MarvelService
 import Tagged
 
-struct AppReducer: ReducerProtocol {
+struct AppReducer: Reducer {
     struct State: Equatable, Identifiable {
         let id: Tagged<Self, String> = .init("app_id")
         var tab: TabItem = .comics

@@ -4,7 +4,7 @@ import Common
 import MarvelService
 import Tagged
 
-public struct CharactersListReducer: ReducerProtocol {
+public struct CharactersListReducer: Reducer {
     public struct State: Equatable, Identifiable {
         public var id: Tagged<Self, String> = .init("characters_list_id")
         public var apiParameters: [String: String] = [:]
@@ -27,7 +27,7 @@ public struct CharactersListReducer: ReducerProtocol {
     
     @Dependency(\.charactersClient) var charactersClient
     
-    public var body: some ReducerProtocol<State, Action> {
+    public var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case .onAppear:

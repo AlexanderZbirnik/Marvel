@@ -2,8 +2,22 @@ import SwiftUI
 import ComposableArchitecture
 import Common
 
+extension CharactersListView {
+    struct ViewState: Equatable {
+        let charactersItems: IdentifiedArrayOf<CharacterItemReducer.State>
+        let copyright: AttributedString
+        let showFooter: Bool
+        
+        init(state: CharactersListReducer.State) {
+            self.charactersItems = state.charactersItems
+            self.copyright = state.copyright
+            self.showFooter = state.showFooter
+        }
+    }
+}
+
 public struct CharactersListView: View {
-    var store: StoreOf<CharactersListReducer>
+    let store: StoreOf<CharactersListReducer>
     
     public init(store: StoreOf<CharactersListReducer>) {
         self.store = store
@@ -11,7 +25,7 @@ public struct CharactersListView: View {
     }
     
     public var body: some View {
-        WithViewStore(self.store) { viewStore in
+        WithViewStore(self.store, observe: ViewState.init) { viewStore in
             NavigationStack {
                 ZStack {
                     Palette.darkGray
@@ -31,7 +45,7 @@ public struct CharactersListView: View {
     }
     
     var listView: some View {
-        WithViewStore(self.store) { viewStore in
+        WithViewStore(self.store, observe: ViewState.init) { viewStore in
             List {
                 Section {
                     ForEachStore(

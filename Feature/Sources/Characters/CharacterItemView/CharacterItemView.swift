@@ -2,6 +2,18 @@ import SwiftUI
 import ComposableArchitecture
 import Common
 
+extension CharacterItemView {
+    struct ViewState: Equatable {
+        let name: String
+        let imageUrl: URL
+        
+        init(state: CharacterItemReducer.State) {
+            self.name = state.name
+            self.imageUrl = state.imageUrl
+        }
+    }
+}
+
 public struct CharacterItemView: View {
     var store: StoreOf<CharacterItemReducer>
     
@@ -10,7 +22,7 @@ public struct CharacterItemView: View {
     }
     
     public var body: some View {
-        WithViewStore(self.store) { viewStore in
+        WithViewStore(self.store, observe: ViewState.init) { viewStore in
             GeometryReader { proxy in
                 ZStack {
                     Palette.darkGray

@@ -3,7 +3,7 @@ import ComposableArchitecture
 import MarvelService
 import Common
 
-public struct ComicsReducer: ReducerProtocol {
+public struct ComicsReducer: Reducer {
     public struct State: Equatable, Identifiable {
         public var id: Comics.Id
         var title = ""

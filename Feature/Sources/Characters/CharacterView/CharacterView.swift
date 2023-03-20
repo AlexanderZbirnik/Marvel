@@ -3,6 +3,26 @@ import ComposableArchitecture
 import Common
 import MarvelService
 
+extension CharacterView {
+    struct ViewState: Equatable {
+        let name: String
+        let imageUrl: URL
+        let detail: String
+        let comics: PreviewComicsList?
+        let series: PreviewSeriesList?
+        let links: PreviewLinksList?
+        
+        init(state: CharacterReducer.State) {
+            self.name = state.name
+            self.imageUrl = state.imageUrl
+            self.detail = state.detail
+            self.comics = state.comics
+            self.series = state.series
+            self.links = state.links
+        }
+    }
+}
+
 public struct CharacterView: View {
     var store: StoreOf<CharacterReducer>
     
@@ -11,12 +31,12 @@ public struct CharacterView: View {
     }
     
     public var body: some View {
-        WithViewStore(self.store) { viewStore in
+        WithViewStore(self.store, observe: ViewState.init) { viewStore in
             ZStack {
                 Palette.darkGray
                     .ignoresSafeArea()
                 ScrollView(.vertical) {
-                    imageView
+                    imageView(viewStore.imageUrl)
                     if !viewStore.detail.isEmpty {
                         DetailView(detail: viewStore.detail)
                     }
@@ -39,24 +59,22 @@ public struct CharacterView: View {
         }
     }
     
-    var imageView: some View {
-        WithViewStore(self.store) { viewStore in
-            AsyncImage(url: viewStore.imageUrl) { image in
-                image
-                    .resizable()
-            } placeholder: {
-                Image.bigRectPlaceholder
-                    .resizable()
-            }
-            .aspectRatio(
-                CGSize(width: 256.0,height: 256.0),
-                contentMode: .fit)
-            .clipShape(Circle())
-            .cornerRadius(8.0)
-            .shadow(color: Palette.red, radius: 8.0)
-            .padding(.horizontal, 64.0)
-            .padding(.vertical, 16.0)
+    func imageView(_ url: URL) -> some View {
+        AsyncImage(url: url) { image in
+            image
+                .resizable()
+        } placeholder: {
+            Image.bigRectPlaceholder
+                .resizable()
         }
+        .aspectRatio(
+            CGSize(width: 256.0,height: 256.0),
+            contentMode: .fit)
+        .clipShape(Circle())
+        .cornerRadius(8.0)
+        .shadow(color: Palette.red, radius: 8.0)
+        .padding(.horizontal, 64.0)
+        .padding(.vertical, 16.0)
     }
     
     func comicsView(_ comics: PreviewComicsList) -> some View {
