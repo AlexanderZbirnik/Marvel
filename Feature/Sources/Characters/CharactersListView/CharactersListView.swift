@@ -33,7 +33,7 @@ public struct CharactersListView: View {
                     if viewStore.charactersItems.isEmpty {
                         DotsActivityView(color: Palette.red)
                     } else {
-                        listView
+                        listView(viewStore)
                     }
                 }
                 .navigationTitle("Characters")
@@ -44,39 +44,37 @@ public struct CharactersListView: View {
         }
     }
     
-    var listView: some View {
-        WithViewStore(self.store, observe: ViewState.init) { viewStore in
-            List {
-                Section {
-                    ForEachStore(
-                        self.store.scope(
-                            state: \.charactersItems,
-                            action: {
-                                .characterItem(id: $0, action: $1)
-                            }))
-                    { store in
-                        CharacterItemView(store: store)
-                            .frame(height: 88.0)
-                    }
-                } footer: {
-                    ZStack {
-                        Palette.darkGray
-                        if viewStore.showFooter {
-                            ListFooterView(
-                                link: viewStore.copyright,
-                                color: Palette.red
-                            )
-                        }
-                    }
-                    .frame(height: 48.0)
+    func listView(_ viewStore: ViewStore<CharactersListView.ViewState, CharactersListReducer.Action>) -> some View {
+        List {
+            Section {
+                ForEachStore(
+                    self.store.scope(
+                        state: \.charactersItems,
+                        action: {
+                            .characterItem(id: $0, action: $1)
+                        }))
+                { store in
+                    CharacterItemView(store: store)
+                        .frame(height: 88.0)
                 }
-                .listRowSeparator(.hidden)
-                .listRowInsets(EdgeInsets(.zero))
+            } footer: {
+                ZStack {
+                    Palette.darkGray
+                    if viewStore.showFooter {
+                        ListFooterView(
+                            link: viewStore.copyright,
+                            color: Palette.red
+                        )
+                    }
+                }
+                .frame(height: 48.0)
             }
-            .background(Palette.darkGray)
-            .listStyle(.plain)
-            .scrollIndicators(.hidden)
+            .listRowSeparator(.hidden)
+            .listRowInsets(EdgeInsets(.zero))
         }
+        .background(Palette.darkGray)
+        .listStyle(.plain)
+        .scrollIndicators(.hidden)
     }
 }
 

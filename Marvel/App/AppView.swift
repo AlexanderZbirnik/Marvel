@@ -5,6 +5,24 @@ import Series
 import Characters
 import Comics
 
+extension AppView {
+    struct ViewState: Equatable {
+        var tab: AppReducer.TabItem
+        let series: SeriesListReducer.State
+        let characters: CharactersListReducer.State
+        let comics: ComicsListReducer.State
+        let showLaunch: Bool
+        
+        init(state: AppReducer.State) {
+            self.tab = state.tab
+            self.series = state.series
+            self.characters = state.characters
+            self.comics = state.comics
+            self.showLaunch = state.showLaunch
+        }
+    }
+}
+
 struct AppView: View {
     var store: StoreOf<AppReducer>
     
@@ -13,11 +31,11 @@ struct AppView: View {
     }
     
     var body: some View {
-        WithViewStore(self.store) { viewStore in
+        WithViewStore(self.store, observe: ViewState.init) { viewStore in
             ZStack {
                 Palette.darkGray
                     .ignoresSafeArea()
-                tabsView
+                tabsView(viewStore)
                 if viewStore.showLaunch {
                     LaunchView()
                         .ignoresSafeArea()
@@ -31,53 +49,51 @@ struct AppView: View {
     }
     
     @ViewBuilder
-    var tabsView: some View {
-        WithViewStore(self.store) { viewStore in
-            TabView(
-                selection: viewStore.binding(
-                    get: \.tab.rawValue,
-                    send: { rawValue in
-                        AppReducer.Action.tabSelected(
-                            AppReducer.TabItem(rawValue: rawValue) ?? .series
-                        )
-                    }
-                )
-            ) {
-                ComicsListView(
-                    store: self.store.scope(
-                        state: \.comics,
-                        action: AppReducer.Action.comics
+    func tabsView(_ viewStore: ViewStore<AppView.ViewState, AppReducer.Action>) -> some View {
+        TabView(
+            selection: viewStore.binding(
+                get: \.tab.rawValue,
+                send: { rawValue in
+                    AppReducer.Action.tabSelected(
+                        AppReducer.TabItem(rawValue: rawValue) ?? .series
                     )
-                )
-                .tabItem {
-                    Label("Comics", systemImage: "magazine")
                 }
-                .tag(AppReducer.TabItem.comics.rawValue)
-                
-                CharactersListView(
-                    store: self.store.scope(
-                        state: \.characters,
-                        action: AppReducer.Action.characters
-                    )
+            )
+        ) {
+            ComicsListView(
+                store: self.store.scope(
+                    state: \.comics,
+                    action: AppReducer.Action.comics
                 )
-                .tabItem {
-                    Label("Characters", systemImage: "person.3")
-                }
-                .tag(AppReducer.TabItem.characters.rawValue)
-                
-                SeriesListView(
-                    store: self.store.scope(
-                        state: \.series,
-                        action: AppReducer.Action.series
-                    )
-                )
-                .tabItem {
-                    Label("Series", systemImage: "books.vertical")
-                }
-                .tag(AppReducer.TabItem.series.rawValue)
+            )
+            .tabItem {
+                Label("Comics", systemImage: "magazine")
             }
-            .accentColor(Palette.red)
+            .tag(AppReducer.TabItem.comics.rawValue)
+            
+            CharactersListView(
+                store: self.store.scope(
+                    state: \.characters,
+                    action: AppReducer.Action.characters
+                )
+            )
+            .tabItem {
+                Label("Characters", systemImage: "person.3")
+            }
+            .tag(AppReducer.TabItem.characters.rawValue)
+            
+            SeriesListView(
+                store: self.store.scope(
+                    state: \.series,
+                    action: AppReducer.Action.series
+                )
+            )
+            .tabItem {
+                Label("Series", systemImage: "books.vertical")
+            }
+            .tag(AppReducer.TabItem.series.rawValue)
         }
+        .accentColor(Palette.red)
     }
 }
 

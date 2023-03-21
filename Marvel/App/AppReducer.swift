@@ -25,7 +25,7 @@ struct AppReducer: Reducer {
         }
     }
     
-    enum TabItem: Int {
+    enum TabItem: Int, Equatable {
         case series
         case characters
         case comics
