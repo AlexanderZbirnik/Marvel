@@ -33,7 +33,7 @@ public struct ComicsListView: View {
                     if viewStore.comicsItems.isEmpty {
                         DotsActivityView(color: Palette.red)
                     } else {
-                        listView(viewStore)
+                        listView()
                     }
                 }
                 .navigationTitle("Comics")
@@ -44,37 +44,39 @@ public struct ComicsListView: View {
         }
     }
     
-    func listView(_ viewStore: ViewStore<ComicsListView.ViewState, ComicsListReducer.Action>) -> some View {
-        List {
-            Section {
-                ForEachStore(
-                    self.store.scope(
-                        state: \.comicsItems,
-                        action: {
-                            .comicsItem(id: $0, action: $1)
-                        }))
-                { store in
-                    ComicsItemView(store: store)
-                        .frame(height: 88.0)
-                }
-            } footer: {
-                ZStack {
-                    Palette.darkGray
-                    if viewStore.showFooter {
-                        ListFooterView(
-                            link: viewStore.copyright,
-                            color: Palette.red
-                        )
+    func listView() -> some View {
+        WithViewStore(self.store, observe: ViewState.init) { viewStore in
+            List {
+                Section {
+                    ForEachStore(
+                        self.store.scope(
+                            state: \.comicsItems,
+                            action: {
+                                .comicsItem(id: $0, action: $1)
+                            }))
+                    { store in
+                        ComicsItemView(store: store)
+                            .frame(height: 88.0)
                     }
+                } footer: {
+                    ZStack {
+                        Palette.darkGray
+                        if viewStore.showFooter {
+                            ListFooterView(
+                                link: viewStore.copyright,
+                                color: Palette.red
+                            )
+                        }
+                    }
+                    .frame(height: 48.0)
                 }
-                .frame(height: 48.0)
+                .listRowSeparator(.hidden)
+                .listRowInsets(EdgeInsets(.zero))
             }
-            .listRowSeparator(.hidden)
-            .listRowInsets(EdgeInsets(.zero))
+            .background(Palette.darkGray)
+            .listStyle(.plain)
+            .scrollIndicators(.hidden)
         }
-        .background(Palette.darkGray)
-        .listStyle(.plain)
-        .scrollIndicators(.hidden)
     }
 }
 

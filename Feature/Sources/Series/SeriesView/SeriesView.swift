@@ -3,6 +3,26 @@ import ComposableArchitecture
 import Common
 import MarvelService
 
+extension SeriesView {
+    struct ViewState: Equatable {
+        let title: String
+        let detail: String
+        let imageUrl: URL
+        let characters: PreviewCharactersList?
+        let creators: PreviewCreatorsList?
+        let comics: PreviewComicsList?
+        
+        init(state: SeriesReducer.State) {
+            self.title = state.title
+            self.detail = state.detail
+            self.imageUrl = state.imageUrl
+            self.characters = state.characters
+            self.creators = state.creators
+            self.comics = state.comics
+        }
+    }
+}
+
 public struct SeriesView: View {
     var store: StoreOf<SeriesReducer>
     
@@ -11,7 +31,7 @@ public struct SeriesView: View {
     }
     
     public var body: some View {
-        WithViewStore(self.store) { viewStore in
+        WithViewStore(self.store, observe: ViewState.init) { viewStore in
             ZStack {
                 Palette.darkGray
                     .ignoresSafeArea()
@@ -41,7 +61,7 @@ public struct SeriesView: View {
     }
     
     var imageView: some View {
-        WithViewStore(self.store) { viewStore in
+        WithViewStore(self.store, observe: ViewState.init) { viewStore in
             AsyncImage(url: viewStore.imageUrl) { image in
                 image
                     .resizable()

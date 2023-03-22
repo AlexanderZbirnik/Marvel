@@ -2,6 +2,20 @@ import SwiftUI
 import ComposableArchitecture
 import Common
 
+extension SeriesListView {
+    struct ViewState: Equatable {
+        let seriesItems: IdentifiedArrayOf<SeriesItemReducer.State>
+        let copyright: AttributedString
+        let showFooter: Bool
+        
+        init(state: SeriesListReducer.State) {
+            self.seriesItems = state.seriesItems
+            self.copyright = state.copyright
+            self.showFooter = state.showFooter
+        }
+    }
+}
+
 public struct SeriesListView: View {
     var store: StoreOf<SeriesListReducer>
     
@@ -11,7 +25,7 @@ public struct SeriesListView: View {
     }
     
     public var body: some View {
-        WithViewStore(self.store) { viewStore in
+        WithViewStore(self.store, observe: ViewState.init) { viewStore in
             NavigationStack {
                 ZStack {
                     Palette.darkGray
@@ -31,7 +45,7 @@ public struct SeriesListView: View {
     }
     
     var listView: some View {
-        WithViewStore(self.store) { viewStore in
+        WithViewStore(self.store, observe: ViewState.init) { viewStore in
             List {
                 Section {
                     ForEachStore(
