@@ -2,6 +2,7 @@ import Foundation
 import ComposableArchitecture
 import MarvelService
 import Common
+import Tagged
 
 public struct SeriesItemReducer: Reducer {
     public struct State: Equatable, Identifiable {
