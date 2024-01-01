@@ -27,7 +27,7 @@ public struct SeriesItemReducer: Reducer {
         case series(SeriesReducer.Action)
     }
     
-    public var body: some ReducerProtocolOf<Self> {
+    public var body: some ReducerOf<Self> {
         Scope(state: \.series, action: /Action.series) {
             SeriesReducer()
         }

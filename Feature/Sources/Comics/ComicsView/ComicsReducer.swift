@@ -66,7 +66,7 @@ public struct ComicsReducer: Reducer {
         case onAppear
     }
     
-    public func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
+    public func reduce(into state: inout State, action: Action) -> Effect<Action> {
         switch action {
         case .onAppear:
             return .none

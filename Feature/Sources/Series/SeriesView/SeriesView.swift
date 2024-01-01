@@ -136,9 +136,10 @@ public struct SeriesView_Previews: PreviewProvider {
         ZStack {
             Color.gray
             NavigationStack {
-                SeriesView(store: Store(
-                    initialState: SeriesReducer.State(.mock),
-                    reducer: SeriesReducer())
+                SeriesView(
+                    store: Store(initialState: SeriesReducer.State(.mock)) {
+                        SeriesReducer()
+                    }
                 )
             }
         }

@@ -205,9 +205,10 @@ public struct ComicsView_Previews: PreviewProvider {
         ZStack {
             Color.gray
             NavigationStack {
-                ComicsView(store: Store(
-                    initialState: ComicsReducer.State(.mock),
-                    reducer: ComicsReducer())
+                ComicsView(
+                    store: Store(initialState: ComicsReducer.State(.mock)) {
+                        ComicsReducer()
+                    }
                 )
             }
         }

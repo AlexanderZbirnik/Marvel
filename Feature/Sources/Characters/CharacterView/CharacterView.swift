@@ -131,9 +131,10 @@ public struct CharacterView_Previews: PreviewProvider {
         ZStack {
             Color.gray
             NavigationStack {
-                CharacterView(store: Store(
-                    initialState: CharacterReducer.State(.mock),
-                    reducer: CharacterReducer())
+                CharacterView(
+                    store: Store(initialState: CharacterReducer.State(.mock)) {
+                        CharacterReducer()
+                    }
                 )
             }
         }

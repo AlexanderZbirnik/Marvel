@@ -43,7 +43,7 @@ struct AppReducer: Reducer {
     
     @Dependency(\.continuousClock) var clock
     
-    var body: some ReducerProtocolOf<Self> {
+    var body: some ReducerOf<Self> {
         Scope(state: \.series, action: /Action.series) {
             SeriesListReducer()
         }

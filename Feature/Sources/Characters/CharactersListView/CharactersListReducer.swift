@@ -50,19 +50,21 @@ public struct CharactersListReducer: Reducer {
 // MARK: - Actions
 
 extension CharactersListReducer {
-    func onAppearAction(_ state: inout State) -> EffectTask<Action> {
+    func onAppearAction(_ state: inout State) -> Effect<Action> {
         if state.firstOnAppear {
             state.firstOnAppear = false
-            return .task { .loadCharacters }
+            return  .run { send in
+                await send(.loadCharacters)
+            }
         }
         return .none
     }
     
-    func loadCharactersAction(_ state: inout State) -> EffectTask<Action> {
+    func loadCharactersAction(_ state: inout State) -> Effect<Action> {
         state.apiParameters["limit"] = "20"
         state.apiParameters["offset"] = "\(state.charactersItems.count)"
-        return .task { [parameters = state.apiParameters] in
-            .charactersLoaded(try await charactersClient.charactersList(parameters))
+        return .run { [parameters = state.apiParameters] send in
+            await send(.charactersLoaded(try await charactersClient.charactersList(parameters)))
         }
     }
     
@@ -84,11 +86,13 @@ extension CharactersListReducer {
         state.showFooter = !state.charactersItems.isEmpty
     }
     
-    func characterItemActions(_ state: inout State, id: Character.Id, action: CharacterItemReducer.Action) -> EffectTask<Action> {
+    func characterItemActions(_ state: inout State, id: Character.Id, action: CharacterItemReducer.Action) -> Effect<Action> {
         if action == .onAppear {
             Haptic.feedback(.soft)
             if id == (state.charactersItems.last?.id ?? .init(0)) {
-                return .task { .loadCharacters }
+                return  .run { send in
+                    await send(.loadCharacters)
+                }
             }
         }
         return .none

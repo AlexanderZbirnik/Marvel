@@ -27,7 +27,7 @@ public struct CharacterItemReducer: Reducer {
         case character(CharacterReducer.Action)
     }
     
-    public var body: some ReducerProtocolOf<Self> {
+    public var body: some ReducerOf<Self> {
         Scope(state: \.character, action: /Action.character) {
             CharacterReducer()
         }

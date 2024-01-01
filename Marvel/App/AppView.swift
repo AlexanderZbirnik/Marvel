@@ -99,8 +99,11 @@ struct AppView: View {
 
 struct AppView_Previews: PreviewProvider {
     static var previews: some View {
-        AppView(store: Store(initialState: AppReducer.State(),
-                             reducer: AppReducer()))
+        AppView(
+            store: Store(initialState: AppReducer.State()) {
+                AppReducer()
+            }
+        )
     }
 }
 

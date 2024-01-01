@@ -50,19 +50,21 @@ public struct ComicsListReducer: Reducer {
 // MARK: - Actions
 
 extension ComicsListReducer {
-    func onAppearAction(_ state: inout State) -> EffectTask<Action> {
+    func onAppearAction(_ state: inout State) -> Effect<Action> {
         if state.firstOnAppear {
             state.firstOnAppear = false
-            return .task { .loadComics }
+            return .run { send in
+                await send(.loadComics)
+            }
         }
         return .none
     }
     
-    func loadComicsAction(_ state: inout State) -> EffectTask<Action> {
+    func loadComicsAction(_ state: inout State) -> Effect<Action> {
         state.apiParameters["limit"] = "20"
         state.apiParameters["offset"] = "\(state.comicsItems.count)"
-        return .task { [parameters = state.apiParameters] in
-            .comicsLoaded(try await comicsClient.comicsList(parameters))
+        return .run { [parameters = state.apiParameters] send in
+            await send(.comicsLoaded(try await comicsClient.comicsList(parameters)))
         }
     }
     
@@ -84,11 +86,13 @@ extension ComicsListReducer {
         state.showFooter = !state.comicsItems.isEmpty
     }
     
-    func comicsItemActions(_ state: inout State, id: Comics.Id, action: ComicsItemReducer.Action) -> EffectTask<Action> {
+    func comicsItemActions(_ state: inout State, id: Comics.Id, action: ComicsItemReducer.Action) -> Effect<Action> {
         if action == .onAppear {
             Haptic.feedback(.soft)
             if id == (state.comicsItems.last?.id ?? .init(0)) {
-                return .task { .loadComics }
+                return .run { send in
+                    await send(.loadComics)
+                }
             }
         }
         return .none

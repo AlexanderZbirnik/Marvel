@@ -50,19 +50,21 @@ public struct SeriesListReducer: Reducer {
 // MARK: - Actions
 
 extension SeriesListReducer {
-    func onAppearAction(_ state: inout State) -> EffectTask<Action> {
+    func onAppearAction(_ state: inout State) -> Effect<Action> {
         if state.firstOnAppear {
             state.firstOnAppear = false
-            return .task { .loadSeries }
+            return .run { send in
+                await send(.loadSeries)
+            }
         }
         return .none
     }
     
-    func loadSeriesAction(_ state: inout State) -> EffectTask<Action> {
+    func loadSeriesAction(_ state: inout State) -> Effect<Action> {
         state.apiParameters["limit"] = "20"
         state.apiParameters["offset"] = "\(state.seriesItems.count)"
-        return .task { [parameters = state.apiParameters] in
-            .seriesLoaded(try await seriesClient.seriesList(parameters))
+        return .run { [parameters = state.apiParameters] send in
+            await send(.seriesLoaded(try await seriesClient.seriesList(parameters)))
         }
     }
     
@@ -84,11 +86,13 @@ extension SeriesListReducer {
         state.showFooter = !state.seriesItems.isEmpty
     }
     
-    func seriesItemActions(_ state: inout State, id: Series.Id, action: SeriesItemReducer.Action) -> EffectTask<Action> {
+    func seriesItemActions(_ state: inout State, id: Series.Id, action: SeriesItemReducer.Action) -> Effect<Action> {
         if action == .onAppear {
             Haptic.feedback(.soft)
             if id == (state.seriesItems.last?.id ?? .init(0)) {
-                return .task { .loadSeries }
+                return .run { send in
+                    await send(.loadSeries)
+                }
             }
         }
         return .none

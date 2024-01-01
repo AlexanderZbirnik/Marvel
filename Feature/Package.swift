@@ -14,7 +14,7 @@ let package = Package(
         .library(name: "MarvelService", targets: ["MarvelService"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "0.49.0"),
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "1.0.0"),
         .package(url: "https://github.com/pointfreeco/swift-tagged", from: "0.9.0"),
     ],
     targets: [

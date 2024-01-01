@@ -83,9 +83,10 @@ public struct CharactersListView: View {
 
 public struct CharactersListView_Previews: PreviewProvider {
     public static var previews: some View {
-        CharactersListView(store: Store(
-            initialState: CharactersListReducer.State(),
-            reducer: CharactersListReducer())
+        CharactersListView(
+            store: Store(initialState: CharactersListReducer.State()) {
+                CharactersListReducer()
+            }
         )
     }
 }

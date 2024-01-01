@@ -27,7 +27,7 @@ public struct ComicsItemReducer: Reducer {
         case comics(ComicsReducer.Action)
     }
     
-    public var body: some ReducerProtocolOf<Self> {
+    public var body: some ReducerOf<Self> {
         Scope(state: \.comics, action: /Action.comics) {
             ComicsReducer()
         }

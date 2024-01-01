@@ -79,9 +79,10 @@ public struct SeriesItemView_Previews: PreviewProvider {
     public static var previews: some View {
         ZStack {
             Color.gray
-            SeriesItemView(store: Store(
-                initialState: SeriesItemReducer.State(.mock),
-                reducer: SeriesItemReducer())
+            SeriesItemView(
+                store: Store(initialState: SeriesItemReducer.State(.mock)) {
+                    SeriesItemReducer()
+                }
             )
             .frame(height: 88.0)
             .background(Color.white)

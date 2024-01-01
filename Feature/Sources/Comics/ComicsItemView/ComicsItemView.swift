@@ -80,9 +80,10 @@ public struct ComicsItemView_Previews: PreviewProvider {
     public static var previews: some View {
         ZStack {
             Color.gray
-            ComicsItemView(store: Store(
-                initialState: ComicsItemReducer.State(.mock),
-                reducer: ComicsItemReducer())
+            ComicsItemView(
+                store: Store(initialState: ComicsItemReducer.State(.mock)) {
+                    ComicsItemReducer()
+                }
             )
             .frame(height: 88.0)
             .background(Color.white)

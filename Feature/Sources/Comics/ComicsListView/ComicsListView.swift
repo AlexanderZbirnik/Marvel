@@ -82,9 +82,10 @@ public struct ComicsListView: View {
 
 public struct ComicsListView_Previews: PreviewProvider {
     public static var previews: some View {
-        ComicsListView(store: Store(
-            initialState: ComicsListReducer.State(),
-            reducer: ComicsListReducer())
+        ComicsListView(
+            store: Store(initialState: ComicsListReducer.State()) {
+                ComicsListReducer()
+            }
         )
     }
 }

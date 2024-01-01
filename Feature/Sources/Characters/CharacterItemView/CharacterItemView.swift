@@ -77,9 +77,10 @@ public struct CharacterItemView_Previews: PreviewProvider {
     public static var previews: some View {
         ZStack {
             Color.gray
-            CharacterItemView(store: Store(
-                initialState: CharacterItemReducer.State(.mock),
-                reducer: CharacterItemReducer())
+            CharacterItemView(
+                store: Store(initialState: CharacterItemReducer.State(.mock)) {
+                    CharacterItemReducer()
+                }
             )
             .frame(height: 88.0)
             .background(Color.white)
